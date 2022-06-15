@@ -3,16 +3,21 @@ package com.secondhand.secondhand.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.secondhand.secondhand.models.entities.User;
 import com.secondhand.secondhand.models.repos.UserRepository;
+import com.secondhand.secondhand.utils.PasswordEncoder;
 
 @Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User addUser(User newUser) {
@@ -27,20 +32,37 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserById(Long id) {
-        this.userRepository.deleteUserById(id);
-        
+        this.userRepository.deleteById(id);
     }
 
     @Override
     public User getById(Long userId) {
-
-        return null;
+        return this.userRepository.findById(userId).get();
     }
 
     @Override
     public List<User> getAllUser() {
 
-        return null;
+        return this.userRepository.findAll() ;
+    }
+    
+        @Override
+        public UserDetails loadUserByUsername(String userName) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+    @Override
+    public User registerUsers(User user) {
+        boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
+        if(userExists){
+            throw new RuntimeException("User already exists with email: " + user.getEmail());
+        }
+
+        String encodePassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encodePassword);
+        
+        return userRepository.save(user);
     }
     
 }
