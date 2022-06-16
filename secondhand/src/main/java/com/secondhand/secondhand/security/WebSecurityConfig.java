@@ -16,30 +16,30 @@ import com.secondhand.secondhand.services.UserService;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    // @Autowired
-    // private UserService userService;
+    @Autowired
+    private UserService userService;
 
-    // @Autowired
-    // private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // @Override
-    // protected void configure (HttpSecurity http) throws Exception{
-    //     http.csrf().disable().authorizeRequests()
-    //         .antMatchers("/user/register").permitAll()
-    //         .anyRequest().fullyAuthenticated()
-    //         .and().httpBasic();
-    // }
+    @Override
+    protected void configure (HttpSecurity http) throws Exception{
+        http.csrf().disable().authorizeRequests()
+            .antMatchers("/user/register").permitAll()
+            .anyRequest().fullyAuthenticated()
+            .and().httpBasic();
+    }
 
-    // @Override
-    // protected void configure (AuthenticationManagerBuilder auth) throws Exception{
-    //     auth.authenticationProvider(daoAuthenticationProvider());
-    // }
+    @Override
+    protected void configure (AuthenticationManagerBuilder auth) throws Exception{
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
 
-    // @Bean
-    // public DaoAuthenticationProvider daoAuthenticationProvider(){
-    //     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    //     provider.setPasswordEncoder(bCryptPasswordEncoder);
-    //     provider.setUserDetailsService((UserDetailsService) userService);
-    //     return provider;
-    // }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(bCryptPasswordEncoder);
+        provider.setUserDetailsService((UserDetailsService) userService);
+        return provider;
+    }
 }

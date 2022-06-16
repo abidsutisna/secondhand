@@ -51,19 +51,19 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @ManyToMany(targetEntity = Schedules.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "history_id", referencedColumnName = "userId")
+    @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private History history;
 
-    @OneToMany(targetEntity = Schedules.class, cascade = CascadeType.ALL )
+    @OneToMany(targetEntity = NotifikasiBid.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "bidId", referencedColumnName = "userId")
     private List<NotifikasiBid> notifikasi;
 
-    @OneToMany(targetEntity = Schedules.class, cascade = CascadeType.ALL )
+    @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "produkId", referencedColumnName = "userId")
     private List<Produk> produk;
 
-    @OneToOne(targetEntity = Schedules.class, cascade = CascadeType.ALL )
+    @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "wishlistId", referencedColumnName = "userId")
     private Wishlist wishlist;
 

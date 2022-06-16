@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,11 +22,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class History {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyId;
     
-    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private User user;
+    private User userId;
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "produkId", referencedColumnName = "id")
