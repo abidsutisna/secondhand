@@ -25,12 +25,10 @@ public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long historyId;
+    private Long historyId; 
     
     private User userId;
 
-    @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "produkId", referencedColumnName = "id")
-    private List<Produk> produk;
+    private List<Produk> produkId; 
 
 }
