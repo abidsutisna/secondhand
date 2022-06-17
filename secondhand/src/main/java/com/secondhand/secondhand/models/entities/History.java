@@ -29,6 +29,8 @@ public class History {
     
     private User userId;
 
+    @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "historyId", referencedColumnName = "historyId")
     private List<Produk> produkId; 
 
 }

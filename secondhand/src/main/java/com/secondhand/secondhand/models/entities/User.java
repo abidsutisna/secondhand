@@ -49,7 +49,11 @@ public class User implements UserDetails {
     private Integer phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole1;
+
+    
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole2;
 
     @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
@@ -69,8 +73,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority) ;
+        SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority(userRole1.name());
+        SimpleGrantedAuthority authority2 = new SimpleGrantedAuthority(userRole2.name());
+        return Collections.singletonList(authority1) ;
     }
 
     @Override

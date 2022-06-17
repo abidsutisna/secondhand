@@ -3,12 +3,8 @@ package com.secondhand.secondhand.services;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import com.secondhand.secondhand.models.entities.User;
-
-
-@Component
 public interface UserService {
     
     public User addUser(User newUser);

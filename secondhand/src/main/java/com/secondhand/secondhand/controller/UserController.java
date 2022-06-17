@@ -3,7 +3,6 @@ package com.secondhand.secondhand.controller;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.UserRegsiterDTO;
 import com.secondhand.secondhand.models.entities.User;
+import com.secondhand.secondhand.models.entities.UserRole;
 import com.secondhand.secondhand.services.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @RestController 
@@ -26,9 +28,6 @@ public class UserController {
     
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO<User>> registerUser(@RequestBody @Valid UserRegsiterDTO userDTO, Errors errors){
@@ -47,7 +46,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
         }
 
-        User user = modelMapper.map(userDTO, User.class);
+        User user = new User();
+
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getPassword());
+        user.setPassword(userDTO.getPassword());
+        user.setUserRole1(UserRole.BUYER);
+        user.setUserRole2(UserRole.SELLER);
 
         responseDTO.setStatus(true);
         responseDTO.setPayload(userService.addUser(user) );

@@ -31,14 +31,16 @@ public class Produk {
 
     private Integer hargaProduk;
 
+    @OneToMany(targetEntity = Category.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "produkId", referencedColumnName = "produkId")
     private List<Category> categories;
 
     private String deskripsi;
     
+    @OneToMany(targetEntity = Image.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "produkId", referencedColumnName = "produkId")
     private List<Image> image;
 
-    @ManyToOne(targetEntity = History.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "produkId", referencedColumnName = "produkId")
-    private History historyId;
+    private Long wishlistId;
 
 }

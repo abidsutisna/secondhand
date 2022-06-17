@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.secondhand.secondhand.models.entities.User;
@@ -11,7 +13,7 @@ import com.secondhand.secondhand.models.repos.UserRepository;
 import com.secondhand.secondhand.utils.PasswordEncoder;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Autowired
     private UserRepository userRepository;
@@ -46,11 +48,11 @@ public class UserServiceImpl implements UserService{
         return this.userRepository.findAll() ;
     }
     
-        @Override
-        public UserDetails loadUserByUsername(String userName) {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    @Override
+    public UserDetails loadUserByUsername(String userName) {
+        return userRepository.findByEmail(userName)
+        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email : " + userName));
+    }
 
     @Override
     public User registerUsers(User user) {

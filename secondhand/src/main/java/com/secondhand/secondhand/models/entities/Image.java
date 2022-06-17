@@ -22,6 +22,8 @@ public class Image {
     private Long imageid; 
     
     private String imagelink;
+
+    private Long produkId;
     
 }
 

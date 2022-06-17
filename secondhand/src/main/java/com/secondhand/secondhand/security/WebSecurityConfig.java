@@ -15,6 +15,7 @@ import com.secondhand.secondhand.services.UserService;
 
 @Configuration
 @EnableWebSecurity
+@Deprecated
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
