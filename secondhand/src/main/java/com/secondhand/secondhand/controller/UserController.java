@@ -82,6 +82,7 @@ public class UserController {
     }
     User user = new User();
 
+    user.setUserId(userDTO.getUserId());
     user.setName(userDTO.getNama());
     user.setCity(userDTO.getKota());
     user.setAddress(userDTO.getAlamat());

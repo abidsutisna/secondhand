@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public void updateUser(User user) {
-        this.userRepository.findById(user.getUserId()).orElseThrow();
+        this.userRepository.findById(user.getUserId()).get();
         this.userRepository.save(user);
     }
 

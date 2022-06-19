@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
+    private Long userId;
+    
     @NotEmpty(message = "Nama is required")
     private String nama;
 

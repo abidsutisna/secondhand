@@ -23,7 +23,7 @@ import com.secondhand.secondhand.models.entities.History;
 import com.secondhand.secondhand.services.HistoryService;
 
 @RestController
-@RequestMapping("/History")
+@RequestMapping("/history")
 public class HistoryController {
     @Autowired
     private HistoryService historyService;

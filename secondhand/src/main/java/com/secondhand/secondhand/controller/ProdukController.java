@@ -63,7 +63,7 @@ public class ProdukController {
   }
   //mengupdate Produk
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid ProdukDTO produkDTO , Errors errors) {  
+  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid Produk produk , Errors errors) {  
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
 
     //if error
@@ -78,15 +78,6 @@ public class ProdukController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Produk produk = new Produk();
-
-    //dw
-    produk.setProdukname(produkDTO.getProdukName());
-    produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
-    produk.setDeskripsi(produkDTO.getDeskripsi());
-    produk.setImage(produkDTO.getImage());
-    produk.setUserId(produkDTO.getUserId());
 
     responseDTO.setStatus(true);
     produkService.updateProduk(produk);
