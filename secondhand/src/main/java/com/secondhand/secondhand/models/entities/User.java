@@ -12,11 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +30,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -46,7 +45,7 @@ public class User implements UserDetails {
 
     private String address;
 
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole1;
@@ -60,15 +59,15 @@ public class User implements UserDetails {
     private History history;
 
     @OneToMany(targetEntity = NotifikasiBid.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "bidId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<NotifikasiBid> notifikasi;
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "produkId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<Produk> produk;
 
     @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "wishlistId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Wishlist wishlist;
 
     @Override

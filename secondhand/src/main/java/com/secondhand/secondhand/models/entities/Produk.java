@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -42,5 +42,7 @@ public class Produk {
     private List<Image> image;
 
     private Long wishlistId;
+
+    private long userId;
 
 }
