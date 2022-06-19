@@ -38,6 +38,11 @@ public class ProdukServiceImpl implements ProdukService {
     public List<Produk> getAllProduk() {
         return this.produkRepository.findAll();
     }
+
+    @Override
+    public List<Produk> findByProdukName(String name) {
+        return produkRepository.findProdukByName("%"+name+"%");
+    }
     
     
 }

@@ -14,7 +14,6 @@ public interface UserService {
     List<User> getAllUser();
     public UserDetails loadUserByUsername(String userName);
     public User registerUsers(User user);
-    
 }
 
 

@@ -1,10 +1,13 @@
 package com.secondhand.secondhand.models.entities;
 
+import static org.mockito.ArgumentMatchers.anyBoolean;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -54,7 +57,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole2;
 
-    @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL )
+    @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private History history;
 
