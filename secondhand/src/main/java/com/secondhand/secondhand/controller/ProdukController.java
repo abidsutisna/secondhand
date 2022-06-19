@@ -36,7 +36,6 @@ public class ProdukController {
 
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
 
-    //if error
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
