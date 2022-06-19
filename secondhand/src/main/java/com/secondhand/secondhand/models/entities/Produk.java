@@ -41,6 +41,8 @@ public class Produk {
     private List<Image> image;
 
     private Long wishlistId;
+    
+    private long historyId;
 
     private long userId;
 
