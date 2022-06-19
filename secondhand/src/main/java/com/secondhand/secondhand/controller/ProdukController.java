@@ -44,6 +44,7 @@ public class ProdukController {
     }
     Produk produk = new Produk();
 
+    //dw
     produk.setProdukname(produkDTO.getProdukName());
     produk.setHargaProduk(produkDTO.getHargaProduk());
     produk.setDeskripsi(produkDTO.getDeskripsi());
