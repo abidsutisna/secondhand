@@ -24,13 +24,14 @@ public class ProdukController {
     @Autowired
     private ProdukService produkService;
 
-    //menambahkan Produk
+    //menambahkan Produk.
     @PostMapping    
     public ResponseEntity<ResponseDTO<Produk>> addProduk(@RequestBody @Valid ProdukDTO produkDTO, Errors errors){
 
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
 
     //if error
+    //produk
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
