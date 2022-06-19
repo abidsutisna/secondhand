@@ -30,7 +30,7 @@ public class ProdukController {
     @Autowired
     private ProdukService produkService;
 
-    //menambahkan Produk
+    //menambahkan Produk.
     @PostMapping    
     public ResponseEntity<ResponseDTO<Produk>> addProduk(@RequestBody @Valid ProdukDTO produkDTO, Errors errors){
 
@@ -63,10 +63,11 @@ public class ProdukController {
   }
   //mengupdate Produk
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid ProdukDTO produkDTO , Errors errors) {  
+  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid Produk produk , Errors errors) {  
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
 
     //if error
+    //produk
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
@@ -77,14 +78,6 @@ public class ProdukController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Produk produk = new Produk();
-
-    produk.setProdukname(produkDTO.getProdukName());
-    produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
-    produk.setDeskripsi(produkDTO.getDeskripsi());
-    produk.setImage(produkDTO.getImage());
-    produk.setUserId(produkDTO.getUserId());
 
     responseDTO.setStatus(true);
     produkService.updateProduk(produk);
