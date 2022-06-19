@@ -21,6 +21,8 @@ public class ProdukDTO {
 
     private List<Image> image;
 
+    private long historyId;
+
     private long userId;
     
 }
