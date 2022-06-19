@@ -60,15 +60,15 @@ public class User implements UserDetails {
     private History history;
 
     @OneToMany(targetEntity = NotifikasiBid.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "bidId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<NotifikasiBid> notifikasi;
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "produkId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<Produk> produk;
 
     @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "wishlistId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Wishlist wishlist;
 
     @Override

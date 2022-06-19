@@ -42,4 +42,6 @@ public class Produk {
 
     private Long wishlistId;
 
+    private long userId;
+
 }

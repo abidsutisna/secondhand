@@ -20,5 +20,7 @@ public class ProdukDTO {
     private String deskripsi;
 
     private List<Image> image;
+
+    private long userId;
     
 }
