@@ -1,10 +1,7 @@
 package com.secondhand.secondhand.controller;
 
-
-import java.util.List;
-
 import javax.validation.Valid;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +16,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.secondhand.secondhand.dto.HistoryDTO;
 import com.secondhand.secondhand.dto.ProdukDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
-import com.secondhand.secondhand.models.entities.Produk;
-import com.secondhand.secondhand.services.ProdukService;
+import com.secondhand.secondhand.models.entities.History;
+import com.secondhand.secondhand.services.HistoryService;
 
 @RestController
-@RequestMapping("/produk")
-public class ProdukController {
+@RequestMapping("/History")
+public class HistoryController {
     @Autowired
-    private ProdukService produkService;
+    private HistoryService historyService;
 
-    //menambahkan Produk.
+    //menambahkan Produk
     @PostMapping    
-    public ResponseEntity<ResponseDTO<Produk>> addProduk(@RequestBody @Valid ProdukDTO produkDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<History>> addHistory(@RequestBody @Valid HistoryDTO historyDTO, Errors errors){
 
-    ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
+    ResponseDTO<History> responseDTO = new ResponseDTO<>();
 
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
@@ -46,28 +44,23 @@ public class ProdukController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Produk produk = new Produk();
+    History history = new History();
 
-    produk.setProdukname(produkDTO.getProdukName());
-    produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
-    produk.setDeskripsi(produkDTO.getDeskripsi());
-    produk.setImage(produkDTO.getImage());
-    produk.setUserId(produkDTO.getUserId());
-    produk.setHistoryId(produkDTO.getHistoryId());
+    
+    history.setUserId(historyDTO.getUserId());
+    
     
     responseDTO.setStatus(true);
-    responseDTO.setPayload(produkService.addProduk(produk));
-    responseDTO.getMessage().add("Succes add produk");
+    responseDTO.setPayload(historyService.addHistory(history));
+    responseDTO.getMessage().add("Succes add history");
     return ResponseEntity.ok(responseDTO);
   }
-  //mengupdate Produk
+  //mengupdate Histrory
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid ProdukDTO produkDTO , Errors errors) {  
-    ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
+  public ResponseEntity<ResponseDTO<History>> updateHistory (@RequestBody @Valid HistoryDTO historyDTO , Errors errors) {  
+    ResponseDTO<History> responseDTO = new ResponseDTO<>();
 
     //if error
-    //produk
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
@@ -78,45 +71,40 @@ public class ProdukController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Produk produk = new Produk();
-
-    //dw
-    produk.setProdukname(produkDTO.getProdukName());
-    produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
-    produk.setDeskripsi(produkDTO.getDeskripsi());
-    produk.setImage(produkDTO.getImage());
-    produk.setUserId(produkDTO.getUserId());
+    History history = new History();
+    
+    history.setUserId(historyDTO.getUserId());
 
     responseDTO.setStatus(true);
-    produkService.updateProduk(produk);
-    responseDTO.setPayload(produk);
-    responseDTO.getMessage().add("Succes update produk");
+    historyService.updateHistory(history);
+    responseDTO.setPayload(history);
+    responseDTO.getMessage().add("Succes update history");
     return ResponseEntity.ok(responseDTO);
   }
 
-  //mendapatkan semua Produk
+  //mendapatkan semua History
   @GetMapping
-  public List<Produk> getAllSchedule(){
-      return this.produkService.getAllProduk();
+  public List<History> getAllSchedule(){
+      return this.historyService.getAllHistory();
   }
 
-  //mendapatkan produk by id
+  //mendapatkan History by id
   @GetMapping("/{id}")
-  public Produk getProdukById(@PathVariable Long id){
-      return this.produkService.getById(id);
+  public History getHistoryById(@PathVariable Long id){
+      return this.historyService.getById(id);
   }
 
-  //delete Produk
+  //delete History
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteProdukById(@PathVariable Long id){
+  public ResponseEntity<String> deleteHistoryById(@PathVariable Long id){
     try {
-      produkService.deleteProdukById(id);
+        historyService.deleteHistoryById(id);
       return new ResponseEntity<String>(HttpStatus.OK);
     }catch(RuntimeException ex){
       System.out.println(ex.getMessage());
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
+    
     
 }

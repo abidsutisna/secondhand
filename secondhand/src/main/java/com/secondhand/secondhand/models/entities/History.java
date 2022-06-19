@@ -27,7 +27,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyId; 
     
-    private User userId;
+    private Long userId;
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "historyId", referencedColumnName = "historyId")
