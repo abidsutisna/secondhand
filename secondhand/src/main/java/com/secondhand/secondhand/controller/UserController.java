@@ -1,19 +1,21 @@
 package com.secondhand.secondhand.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,6 @@ import com.secondhand.secondhand.models.entities.User;
 import com.secondhand.secondhand.models.entities.UserRole;
 import com.secondhand.secondhand.services.UserService;
 
-
 @RestController 
 @RequestMapping("/user")
 public class UserController {
@@ -34,7 +35,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
+
     public ResponseEntity<ResponseDTO<User>> registerUser(@RequestBody @Valid UserRegsiterDTO userRegisterDTO, Errors errors){
+
 
         ResponseDTO<User> responseDTO = new ResponseDTO<>();
 
@@ -59,10 +62,12 @@ public class UserController {
         user.setUserRole2(UserRole.SELLER);
 
         responseDTO.setStatus(true);
-        responseDTO.setPayload(userService.registerUsers(user) );
+
+        responseDTO.setPayload(userService.registerUsers(user)) ;
         responseDTO.getMessage().add("Succes register");
         return ResponseEntity.ok(responseDTO);
     }
+
     //mengupdate user
     @PutMapping("/update")
     public ResponseEntity<ResponseDTO<User>> updateUser(@RequestBody @Valid UserDTO userDTO , Errors errors) {  
@@ -115,6 +120,7 @@ public class UserController {
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
+
 }
 
 

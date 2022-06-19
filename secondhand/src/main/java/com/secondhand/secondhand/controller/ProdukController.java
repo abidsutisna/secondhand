@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.secondhand.secondhand.dto.ProdukDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
+import com.secondhand.secondhand.dto.SearchDTO;
 import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.services.ProdukService;
 
@@ -108,6 +109,11 @@ public class ProdukController {
       System.out.println(ex.getMessage());
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
+  }
+
+  @PostMapping("/search")
+  public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
+      return this.produkService.findByProdukName(searchDTO.getSearchKey());
   }
     
 }
