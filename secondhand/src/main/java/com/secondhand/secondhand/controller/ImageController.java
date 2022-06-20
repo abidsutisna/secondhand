@@ -1,10 +1,7 @@
 package com.secondhand.secondhand.controller;
 
-
-import java.util.List;
-
 import javax.validation.Valid;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.secondhand.secondhand.dto.ProdukDTO;
+import com.secondhand.secondhand.dto.ImageDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
-import com.secondhand.secondhand.dto.SearchDTO;
-import com.secondhand.secondhand.models.entities.Produk;
-import com.secondhand.secondhand.services.ProdukService;
+import com.secondhand.secondhand.models.entities.Image;
+import com.secondhand.secondhand.services.ImageService;
 
-@RestController
-@RequestMapping("/produk")
-public class ProdukController {
+@RestController 
+@RequestMapping("/image")
+public class ImageController {
     @Autowired
-    private ProdukService produkService;
+    private ImageService imageService;
 
-    //menambahkan Produk.
+    //menambahkan Image.
     @PostMapping    
-    public ResponseEntity<ResponseDTO<Produk>> addProduk(@RequestBody @Valid ProdukDTO produkDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<Image>> addImage(@RequestBody @Valid ImageDTO imageDTO, Errors errors){
 
-    ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
+    ResponseDTO<Image> responseDTO = new ResponseDTO<>();
 
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
@@ -47,28 +43,22 @@ public class ProdukController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Produk produk = new Produk();
+    Image image = new Image();
 
-    produk.setProdukname(produkDTO.getProdukName());
-    produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
-    produk.setDeskripsi(produkDTO.getDeskripsi());
-    produk.setImage(produkDTO.getImage());
-    produk.setUserId(produkDTO.getUserId());
-    produk.setHistoryId(produkDTO.getHistoryId());
+    image.setImagelink(imageDTO.getImagelink());
+    image.setProdukId(imageDTO.getProdukId());
     
     responseDTO.setStatus(true);
-    responseDTO.setPayload(produkService.addProduk(produk));
-    responseDTO.getMessage().add("Succes add produk");
+    responseDTO.setPayload(imageService.addImage(image));
+    responseDTO.getMessage().add("Succes add Image");
     return ResponseEntity.ok(responseDTO);
   }
-  //mengupdate Produk
+  //mengupdate Image
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid Produk produk , Errors errors) {  
-    ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
+  public ResponseEntity<ResponseDTO<Image>> updateImage (@RequestBody @Valid Image image , Errors errors) {  
+    ResponseDTO<Image> responseDTO = new ResponseDTO<>();
 
     //if error
-    //produk
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
@@ -81,29 +71,29 @@ public class ProdukController {
     }
 
     responseDTO.setStatus(true);
-    produkService.updateProduk(produk);
-    responseDTO.setPayload(produk);
-    responseDTO.getMessage().add("Succes update produk");
+    imageService.updateImage(image);
+    responseDTO.setPayload(image);
+    responseDTO.getMessage().add("Succes update Image");
     return ResponseEntity.ok(responseDTO);
   }
 
-  //mendapatkan semua Produk
+  //mendapatkan semua Image
   @GetMapping
-  public List<Produk> getAllProduks(){
-      return this.produkService.getAllProduk();
+  public List<Image> getAllImages(){
+      return this.imageService.getAllImage();
   }
 
-  //mendapatkan produk by id
+  //mendapatkan Image by id
   @GetMapping("/{id}")
-  public Produk getProdukById(@PathVariable Long id){
-      return this.produkService.getById(id);
+  public Image getImageById(@PathVariable Long id){
+      return this.imageService.getById(id);
   }
 
-  //delete Produk
+  //delete Image
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteProdukById(@PathVariable Long id){
+  public ResponseEntity<String> deleteImageById(@PathVariable Long id){
     try {
-      produkService.deleteProdukById(id);
+        imageService.deleteImageById(id);
       return new ResponseEntity<String>(HttpStatus.OK);
     }catch(RuntimeException ex){
       System.out.println(ex.getMessage());
@@ -111,9 +101,4 @@ public class ProdukController {
     }
   }
 
-  @PostMapping("/search")
-  public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
-      return this.produkService.findByProdukName(searchDTO.getSearchKey());
-  }
-    
 }
