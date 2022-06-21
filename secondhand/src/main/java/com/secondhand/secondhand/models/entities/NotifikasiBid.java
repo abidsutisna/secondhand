@@ -24,4 +24,6 @@ public class NotifikasiBid {
     private Long produkId;
 
     private Integer hargaPenawaran;
+
+    private Long userId;
 }
