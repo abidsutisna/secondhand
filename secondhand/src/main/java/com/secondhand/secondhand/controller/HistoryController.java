@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.secondhand.secondhand.dto.HistoryDTO;
-import com.secondhand.secondhand.dto.ProdukDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.models.entities.History;
 import com.secondhand.secondhand.services.HistoryService;

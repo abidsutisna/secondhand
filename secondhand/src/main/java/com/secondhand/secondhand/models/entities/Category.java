@@ -1,4 +1,4 @@
-package com.secondhand.secondhand.models.entities;
+        package com.secondhand.secondhand.models.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
