@@ -24,7 +24,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    //menambahkan Produk
+    //menambahkan Category
     @PostMapping    
     public ResponseEntity<ResponseDTO<Category>> addCategory(@RequestBody @Valid CategoryDTO categoryDTO, Errors errors){
 
