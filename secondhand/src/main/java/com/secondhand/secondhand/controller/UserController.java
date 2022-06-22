@@ -1,9 +1,12 @@
 package com.secondhand.secondhand.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +21,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.UserDTO;
+import com.secondhand.secondhand.dto.UserLoginDTO;
 import com.secondhand.secondhand.dto.UserRegsiterDTO;
 import com.secondhand.secondhand.models.entities.User;
 import com.secondhand.secondhand.models.entities.UserRole;
@@ -66,6 +71,32 @@ public class UserController {
         responseDTO.setPayload(userService.registerUsers(user)) ;
         responseDTO.getMessage().add("Succes register");
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody @Valid UserLoginDTO userLoginDTO,Errors error ) {
+    
+      ResponseDTO<User> responseDTO = new ResponseDTO<>();
+
+     User oauthUser = userService.login(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+    
+     if(Objects.nonNull(oauthUser)){
+  
+     return "redirect:/";
+    
+     } else {
+
+     return "redirect:/login";
+    
+     }
+    }
+
+    @PostMapping("/logout")
+    public String logoutDo(HttpServletRequest request,HttpServletResponse response)
+    {
+    
+  
+        return "redirect:/login";
     }
 
     //mengupdate user
