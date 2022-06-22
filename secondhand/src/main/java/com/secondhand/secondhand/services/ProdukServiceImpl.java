@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.secondhand.secondhand.models.entities.Category;
 import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.models.repos.ProdukRepository;
 
@@ -44,5 +45,16 @@ public class ProdukServiceImpl implements ProdukService {
         return produkRepository.findProdukByName("%"+name+"%");
     }
     
+
+    @Override
+    public void addCategory(Category category, Long produkId) {
+        Produk produk = getById(produkId);
+        if(produk == null ){
+            throw new RuntimeException("Product with ID: " + produkId + " Not found");
+        }
+        produk.getCategories().add(category);
+        addProduk(produk);
+        
+    }
     
 }
