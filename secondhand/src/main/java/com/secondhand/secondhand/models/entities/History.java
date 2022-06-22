@@ -1,5 +1,6 @@
 package com.secondhand.secondhand.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class History {
+public class History implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,7 @@ public class History {
     private Long userId;
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "historyId", referencedColumnName = "historyId")
+    @JoinColumn(name = "historyId", referencedColumnName = "historyId" , nullable = true)
     private List<Produk> produkId; 
 
 }

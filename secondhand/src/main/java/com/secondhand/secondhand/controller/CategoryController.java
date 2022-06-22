@@ -46,10 +46,7 @@ public class CategoryController {
     }
     Category category = new Category();
 
-    
-    category.setCategoryName(categoryDTO.getCategoryName());
-    category.setProdukId(categoryDTO.getProdukId());
-    
+    category.setCategoryName(categoryDTO.getCategoryName());    
     
     responseDTO.setStatus(true);
     responseDTO.setPayload(categoryService.addCategory(category));

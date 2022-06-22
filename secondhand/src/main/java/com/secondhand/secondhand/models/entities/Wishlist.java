@@ -1,5 +1,6 @@
 package com.secondhand.secondhand.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Wishlist {
+public class Wishlist implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
