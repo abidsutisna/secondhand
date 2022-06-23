@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class WishlistDTO {
     private long userId;
-    private List<Produk> produkWishlist;
+    private List<Produk> produk;
 
 }
