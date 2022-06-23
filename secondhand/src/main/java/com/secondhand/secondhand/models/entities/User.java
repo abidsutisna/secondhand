@@ -81,7 +81,6 @@ public class User implements UserDetails, Serializable {
 
 
         return Collections.singletonList(authority1) ;
-    
     }
 
     @Override
