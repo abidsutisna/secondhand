@@ -107,6 +107,13 @@
 			<artifactId>spring-data-mongodb</artifactId>
 			<version>3.0.3.RELEASE</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
