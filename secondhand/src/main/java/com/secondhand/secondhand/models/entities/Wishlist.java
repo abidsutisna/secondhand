@@ -3,13 +3,13 @@ package com.secondhand.secondhand.models.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +29,10 @@ public class Wishlist implements Serializable{
 
     private long userId;
     
-    @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "wishlistId", referencedColumnName = "wishlistId")
-    private List<Produk> produkWishlist;
+    @ManyToMany
+    @JoinTable(
+        name="produk_wishlist",
+        joinColumns = @JoinColumn(name="wishlistId"),
+        inverseJoinColumns = @JoinColumn(name = "produkId"))
+    private List<Produk> produk;
 }
