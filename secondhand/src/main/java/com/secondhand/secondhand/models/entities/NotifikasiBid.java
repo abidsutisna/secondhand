@@ -21,11 +21,9 @@ public class NotifikasiBid implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bidId;
-
-    private Long produkId;
-
-    private Integer hargaPenawaran;
+    private Long notifikasiId;
+    
+    private Long penawaranId;
 
     private Long userId;
 }

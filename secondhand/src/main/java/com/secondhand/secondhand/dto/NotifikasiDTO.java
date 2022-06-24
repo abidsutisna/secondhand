@@ -9,7 +9,7 @@ public class NotifikasiDTO {
 
     private Long produkId;
 
-    private Integer hargaPenawaran;
+    private Long penawaranId;
 
     private Long userId;
 }
