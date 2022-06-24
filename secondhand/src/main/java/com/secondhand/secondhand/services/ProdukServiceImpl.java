@@ -49,8 +49,8 @@ public class ProdukServiceImpl implements ProdukService {
     @Override
     public void addCategory(Category category, Long produkId) {
         Produk produk = getById(produkId);
-        if(produk == null ){
-            throw new RuntimeException("Product with ID: " + produkId + " Not found");
+        if(produk == null ){   throw new RuntimeException("Product with ID: " + produkId + " Not found");
+         
         }
         produk.getCategories().add(category);
         addProduk(produk);

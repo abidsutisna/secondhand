@@ -14,9 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinTable;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 import lombok.AllArgsConstructor;
@@ -41,8 +39,8 @@ public class Produk implements Serializable{
 
     @ManyToMany
     @JoinTable(
-        name="product_category",
-        joinColumns = @JoinColumn(name="productId"),
+        name="produk_category",
+        joinColumns = @JoinColumn(name="produkId"),
         inverseJoinColumns = @JoinColumn(name = "categoryId"))
     private List<Category> categories;
 
@@ -52,7 +50,9 @@ public class Produk implements Serializable{
     @JoinColumn(name = "produkId", referencedColumnName = "produkId")
     private List<Image> image;
 
-    private Long wishlistId;
+    @ManyToMany(mappedBy = "produk")
+    @JsonBackReference
+    private List<Wishlist> wishlist;
     
     private long historyId;
 

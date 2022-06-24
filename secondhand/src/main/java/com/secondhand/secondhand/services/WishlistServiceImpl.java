@@ -3,6 +3,8 @@ package com.secondhand.secondhand.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
+import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.models.entities.Wishlist;
 import com.secondhand.secondhand.models.repos.WishlistRepository;
 
@@ -35,6 +37,17 @@ public class WishlistServiceImpl implements WishlistService{
     @Override
     public List<Wishlist> getAllWishlist() {
         return this.wishlistRepository.findAll();
+    }
+
+    @Override
+    public void addProduk(Produk produk, Long wishlistId) {
+        Wishlist wishlist = getById(wishlistId);
+        if(wishlist == null ){   throw new RuntimeException("wis with ID: " + wishlistId + " Not found");
+         
+        }
+        wishlist.getProduk().add(produk);
+        addWishlist(wishlist);
+        
     }
 }
     
