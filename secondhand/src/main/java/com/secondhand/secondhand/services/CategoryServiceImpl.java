@@ -9,33 +9,35 @@ import com.secondhand.secondhand.models.entities.Category;
 import com.secondhand.secondhand.models.repos.CategoryRepository;
 
 @Service
-public class CategoryServiceImpl implements CategoryService  {
+public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category addCategory(Category category) {
-        return this.categoryRepository.save(category);
-    }
-
-    @Override
-    public Category getByIdCategory(Long id) {
-        return this.categoryRepository.findById(id).get();
-    }
-
-    @Override
-    public List<Category> getAllCategory() {
-        return this.categoryRepository.findAll();
+    public Category addCategory(Category newCategory) {
+        return this.categoryRepository.save(newCategory);
     }
 
     @Override
     public void updateCategory(Category category) {
         this.categoryRepository.findById(category.getCategoryId()).get();
         this.categoryRepository.save(category);
+        
     }
 
     @Override
-    public void deleteCategoryyById(Long id) {
+    public void deleteCategoryById(Long id) {
         this.categoryRepository.deleteById(id);
     }
+
+    @Override
+    public Category getById(Long categoryId) {
+        return this.categoryRepository.findById(categoryId).get();
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return this.categoryRepository.findAll();
+    }
+
 }

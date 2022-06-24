@@ -2,19 +2,11 @@ package com.secondhand.secondhand.controller;
 
 import javax.validation.Valid;
 
-
-
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,23 +15,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.secondhand.secondhand.dto.CategoryDTO;
+import java.util.List;
+import com.secondhand.secondhand.dto.NotifikasiDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
-import com.secondhand.secondhand.models.entities.Category;
-import com.secondhand.secondhand.services.CategoryService;
+import com.secondhand.secondhand.models.entities.NotifikasiBid;
+import com.secondhand.secondhand.services.NotifikasiSevice;
 
-@RestController
-@RequestMapping("/category")
-public class CategoryController {
+
+@RestController 
+@RequestMapping("/notifikasi")
+public class NotifikasiController {
     @Autowired
-    private CategoryService categoryService;
+    private NotifikasiSevice notifikasiService;
 
-    //menambahkan Category
+    //menambahkan Notifikasi.
     @PostMapping    
-    public ResponseEntity<ResponseDTO<Category>> addHistory(@RequestBody @Valid CategoryDTO categoryDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<NotifikasiBid>> addNotifikasiBid(@RequestBody @Valid NotifikasiDTO notifikasiDTO, Errors errors){
 
-    ResponseDTO<Category> responseDTO = new ResponseDTO<>();
+    ResponseDTO<NotifikasiBid> responseDTO = new ResponseDTO<>();
 
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
@@ -51,19 +44,22 @@ public class CategoryController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Category category = new Category();
+    NotifikasiBid notifikasiBid = new NotifikasiBid();
 
-    category.setCategoryName(categoryDTO.getCategoryName());    
+    
+    notifikasiBid.setProdukId(notifikasiDTO.getProdukId());
+    notifikasiBid.setHargaPenawaran(notifikasiDTO.getHargaPenawaran());
+    notifikasiBid.setUserId(notifikasiDTO.getUserId());
     
     responseDTO.setStatus(true);
-    responseDTO.setPayload(categoryService.addCategory(category));
-    responseDTO.getMessage().add("Succes add Category");
+    responseDTO.setPayload(notifikasiService.addNotifikasiBid(notifikasiBid));
+    responseDTO.getMessage().add("Succes add Notifikasi");
     return ResponseEntity.ok(responseDTO);
   }
-  //mengupdate Category
+  //mengupdate Notifikasi
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Category>> updateHistory (@RequestBody @Valid Category category , Errors errors) {  
-    ResponseDTO<Category> responseDTO = new ResponseDTO<>();
+  public ResponseEntity<ResponseDTO<NotifikasiBid>> updateNotifikasiBid (@RequestBody @Valid NotifikasiBid notifikasiBid , Errors errors) {  
+    ResponseDTO<NotifikasiBid> responseDTO = new ResponseDTO<>();
 
     //if error
     if(errors.hasErrors()){
@@ -77,36 +73,34 @@ public class CategoryController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
 
-
     responseDTO.setStatus(true);
-    categoryService.updateCategory(category);
-    responseDTO.setPayload(category);
-    responseDTO.getMessage().add("Succes update category");
+    notifikasiService.updateNotifikasiBid(notifikasiBid);
+    responseDTO.setPayload(notifikasiBid);
+    responseDTO.getMessage().add("Succes update Notifikasi");
     return ResponseEntity.ok(responseDTO);
   }
 
-  //mendapatkan semua Category
+  //mendapatkan semua Notifikasi
   @GetMapping
-  public List<Category> getAllCategory(){
-      return this.categoryService.getAllCategories();
+  public List<NotifikasiBid> getAllNotifikasiBid(){
+      return this.notifikasiService.getAllNotifikasiBid();
   }
 
-  //mendapatkan Category by id
+  //mendapatkan Notifikasi by id
   @GetMapping("/{id}")
-  public Category getCategoryById(@PathVariable Long id){
-      return this.categoryService.getById(id);
+  public NotifikasiBid getNotifikasiById(@PathVariable Long id){
+      return this.notifikasiService.getById(id);
   }
 
-  //delete Category
+  //delete Notifikasi
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteCategoryById(@PathVariable Long id){
+  public ResponseEntity<String> deleteNotifikasiBidById(@PathVariable Long id){
     try {
-        categoryService.deleteCategoryById(id);
+        notifikasiService.deleteNotifikasiBidById(id);
       return new ResponseEntity<String>(HttpStatus.OK);
     }catch(RuntimeException ex){
       System.out.println(ex.getMessage());
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
-
 }

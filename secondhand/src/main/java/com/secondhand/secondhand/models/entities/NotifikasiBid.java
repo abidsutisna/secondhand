@@ -1,5 +1,7 @@
 package com.secondhand.secondhand.models.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotifikasiBid {
+public class NotifikasiBid implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +26,6 @@ public class NotifikasiBid {
     private Long produkId;
 
     private Integer hargaPenawaran;
+
+    private Long userId;
 }

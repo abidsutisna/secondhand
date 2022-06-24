@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.secondhand.secondhand.dto.ProdukDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.SearchDTO;
+import com.secondhand.secondhand.models.entities.Category;
 import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.services.ProdukService;
 
@@ -51,7 +52,6 @@ public class ProdukController {
 
     produk.setProdukname(produkDTO.getProdukName());
     produk.setHargaProduk(produkDTO.getHargaProduk());
-    produk.setCategories(produkDTO.getCategories());
     produk.setDeskripsi(produkDTO.getDeskripsi());
     produk.setImage(produkDTO.getImage());
     produk.setUserId(produkDTO.getUserId());
@@ -114,6 +114,11 @@ public class ProdukController {
   @PostMapping("/search")
   public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
       return this.produkService.findByProdukName(searchDTO.getSearchKey());
+  }
+
+  @PostMapping("/{id}")
+  public void addCategory(@RequestBody Category category, @PathVariable("id") Long produkId){
+       this.produkService.addCategory(category, produkId);
   }
     
 }

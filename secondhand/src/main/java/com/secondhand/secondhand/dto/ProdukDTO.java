@@ -17,8 +17,6 @@ public class ProdukDTO {
 
     private Integer hargaProduk;
 
-    private List<Category> categories;
-
     private String deskripsi;
 
     private List<Image> image;

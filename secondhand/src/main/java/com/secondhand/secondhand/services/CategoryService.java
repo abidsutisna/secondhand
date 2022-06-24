@@ -3,11 +3,12 @@ import java.util.List;
 
 import com.secondhand.secondhand.models.entities.Category;
 
-
-public interface CategoryService{
-    public Category addCategory(Category category);
+public interface CategoryService {
+    public Category addCategory(Category newCategory);
     void updateCategory(Category category);
-    void deleteCategoryyById(Long id);
-    Category getByIdCategory(Long id);
-    List<Category> getAllCategory();
+    void deleteCategoryById(Long id);
+    Category getById(Long categoryId);
+    List<Category> getAllCategories();
+    
+
 }

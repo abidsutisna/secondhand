@@ -2,6 +2,7 @@ package com.secondhand.secondhand.models.entities;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,7 +78,10 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority(userRole1.name());
         SimpleGrantedAuthority authority2 = new SimpleGrantedAuthority(userRole2.name());
+
+
         return Collections.singletonList(authority1) ;
+    
     }
 
     @Override

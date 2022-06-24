@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.secondhand.secondhand.dto.HistoryDTO;
-import com.secondhand.secondhand.dto.ProdukDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.models.entities.History;
 import com.secondhand.secondhand.services.HistoryService;
@@ -57,7 +56,7 @@ public class HistoryController {
   }
   //mengupdate Histrory
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<History>> updateHistory (@RequestBody @Valid HistoryDTO historyDTO , Errors errors) {  
+  public ResponseEntity<ResponseDTO<History>> updateHistory (@RequestBody @Valid History history , Errors errors) {  
     ResponseDTO<History> responseDTO = new ResponseDTO<>();
 
     //if error
@@ -71,9 +70,7 @@ public class HistoryController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    History history = new History();
-    
-    history.setUserId(historyDTO.getUserId());
+
 
     responseDTO.setStatus(true);
     historyService.updateHistory(history);
@@ -84,7 +81,7 @@ public class HistoryController {
 
   //mendapatkan semua History
   @GetMapping
-  public List<History> getAllSchedule(){
+  public List<History> getAllHistory(){
       return this.historyService.getAllHistory();
   }
 
