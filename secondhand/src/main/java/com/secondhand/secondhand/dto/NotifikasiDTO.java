@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class NotifikasiDTO {
 
-
     private Long produkId;
 
     private Integer hargaPenawaran;

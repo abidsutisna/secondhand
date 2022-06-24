@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +32,7 @@ public class Wishlist implements Serializable{
 
     private long userId;
     
-    @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
-    @JoinColumn(name = "wishlistId", referencedColumnName = "wishlistId")
+    @ManyToMany(mappedBy = "wishlist")
+    @JsonBackReference
     private List<Produk> produkWishlist;
 }

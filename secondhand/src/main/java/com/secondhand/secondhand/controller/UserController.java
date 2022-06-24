@@ -100,8 +100,8 @@ public class UserController {
     }
 
     //mengupdate user
-    @PutMapping("/update")
-    public ResponseEntity<ResponseDTO<User>> updateUser(@RequestBody @Valid UserDTO userDTO , Errors errors) {  
+    @PostMapping("/update")
+    public ResponseEntity<ResponseDTO<User>> updateUser(@RequestBody @Valid User user , Errors errors) {  
 
     ResponseDTO<User> responseDTO = new ResponseDTO<>();
 
@@ -116,18 +116,24 @@ public class UserController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    User user = new User();
+    // User user = new User();
 
-    user.setUserId(userDTO.getUserId());
-    user.setName(userDTO.getNama());
-    user.setCity(userDTO.getKota());
-    user.setAddress(userDTO.getAlamat());
-    user.setPhoneNumber(userDTO.getNoHp());
+    // user.setUserId(userDTO.getUserId());
+    // user.setName(userDTO.getNama());
+    // user.setCity(userDTO.getKota());
+    // user.setAddress(userDTO.getAlamat());
+    // user.setPhoneNumber(userDTO.getNoHp());
+
+    user.setName(userService.getById(user.getUserId()).getUsername());
+    user.setUserRole1(UserRole.BUYER);
+    user.setUserRole2(UserRole.SELLER);
+    user.setEmail(userService.getById(user.getUserId()).getEmail());
+    user.setPassword(userService.getById(user.getUserId()).getPassword());
 
     responseDTO.setStatus(true);
     userService.updateUser(user);
     responseDTO.setPayload(user);
-    responseDTO.getMessage().add("Succes add user");
+    responseDTO.getMessage().add("Succes update user");
     return ResponseEntity.ok(responseDTO);
     }
     //mendapatkan semua data user

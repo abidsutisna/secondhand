@@ -13,9 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,12 +48,10 @@ public class Produk implements Serializable{
     @JoinColumn(name = "produkId", referencedColumnName = "produkId")
     private List<Image> image;
 
-    @JoinTable(
-        name="produk_wishlist",
-        joinColumns = @JoinColumn(name="produkId"),
-        inverseJoinColumns = @JoinColumn(name = "WishlistId"))
-    private List<Produk> produkWishList;
-    private Long wishlistId;
+    @ManyToMany(mappedBy = "produk")
+    @JsonBackReference
+    private List<Wishlist> wishlist;
+
     
     private long historyId;
 

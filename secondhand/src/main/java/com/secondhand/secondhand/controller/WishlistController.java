@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lowagie.text.Image;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.WishlistDTO;
+import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.models.entities.Wishlist;
 import com.secondhand.secondhand.services.WishlistService;
 
@@ -101,5 +102,10 @@ public class WishlistController {
       System.out.println(ex.getMessage());
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
+  }
+
+  @PostMapping("/{id}")
+  public void addProduk(@RequestBody Produk produk, @PathVariable("id") Long wishlistId){
+       this.wishlistService.addProduk(produk, wishlistId);
   }
 }
