@@ -39,8 +39,8 @@ public class Produk implements Serializable{
 
     @ManyToMany
     @JoinTable(
-        name="product_category",
-        joinColumns = @JoinColumn(name="productId"),
+        name="produk_category",
+        joinColumns = @JoinColumn(name="produkId"),
         inverseJoinColumns = @JoinColumn(name = "categoryId"))
     private List<Category> categories;
 
@@ -50,6 +50,11 @@ public class Produk implements Serializable{
     @JoinColumn(name = "produkId", referencedColumnName = "produkId")
     private List<Image> image;
 
+    @JoinTable(
+        name="produk_wishlist",
+        joinColumns = @JoinColumn(name="produkId"),
+        inverseJoinColumns = @JoinColumn(name = "WishlistId"))
+    private List<Produk> produkWishList;
     private Long wishlistId;
     
     private long historyId;
