@@ -82,7 +82,7 @@ public class UserController {
     
      if(Objects.nonNull(oauthUser)){
   
-     return "redirect:/";
+     return "redirect:/home";
     
      } else {
 
