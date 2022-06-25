@@ -53,6 +53,7 @@ public class Produk implements Serializable{
     @ManyToMany(mappedBy = "produk")
     @JsonBackReference
     private List<Wishlist> wishlist;
+
     
     private long historyId;
 
