@@ -6,31 +6,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.secondhand.secondhand.dto.ResponseDTO;
-import com.secondhand.secondhand.dto.UserDTO;
 import com.secondhand.secondhand.dto.UserLoginDTO;
 import com.secondhand.secondhand.dto.UserRegsiterDTO;
 import com.secondhand.secondhand.models.entities.User;
 import com.secondhand.secondhand.models.entities.UserRole;
 import com.secondhand.secondhand.services.UserService;
+import com.secondhand.secondhand.utils.JwtUtil;
 
 @RestController 
 @RequestMapping("/user")
@@ -39,8 +38,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @GetMapping("/home")
+    public String welcome() {
+        return "Welcome to secondhand";
+    }
+
+    @PostMapping("/register")
     public ResponseEntity<ResponseDTO<User>> registerUser(@RequestBody @Valid UserRegsiterDTO userRegisterDTO, Errors errors){
 
 
@@ -74,21 +83,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserLoginDTO userLoginDTO,Errors error ) {
-    
-      ResponseDTO<User> responseDTO = new ResponseDTO<>();
-
-     User oauthUser = userService.login(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-    
-     if(Objects.nonNull(oauthUser)){
-  
-     return "redirect:/home";
-    
-     } else {
-
-     return "redirect:/login";
-    
-     }
+    public String generateToken(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword())
+            );
+        } catch (Exception ex) {
+            throw new Exception("inavalid username/password");
+        }
+        return jwtUtil.generateToken(userLoginDTO.getEmail());
     }
 
     @PostMapping("/logout")
