@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -32,7 +33,10 @@ public class Wishlist implements Serializable{
 
     private long userId;
     
-    @ManyToMany(mappedBy = "wishlist")
-    @JsonBackReference
-    private List<Produk> produkWishlist;
+    @ManyToMany
+    @JoinTable(
+        name="produk_wishlist",
+        joinColumns = @JoinColumn(name="wishlistId"),
+        inverseJoinColumns = @JoinColumn(name = "produkId"))
+    private List<Produk> produk;
 }

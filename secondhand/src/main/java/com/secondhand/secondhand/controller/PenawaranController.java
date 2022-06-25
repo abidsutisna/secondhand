@@ -2,19 +2,11 @@ package com.secondhand.secondhand.controller;
 
 import javax.validation.Valid;
 
-
-
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,23 +15,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.secondhand.secondhand.dto.CategoryDTO;
+import java.util.List;
+import com.secondhand.secondhand.dto.PenawaranDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
-import com.secondhand.secondhand.models.entities.Category;
-import com.secondhand.secondhand.services.CategoryService;
+import com.secondhand.secondhand.models.entities.Penawaran;
+import com.secondhand.secondhand.services.PenawaranService;
 
-@RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RestController 
+@RequestMapping("/penawaran")
+public class PenawaranController {
     @Autowired
-    private CategoryService categoryService;
+    private PenawaranService penawaranService;
 
-    //menambahkan Category
+    //menambahkan Penawaran
     @PostMapping    
-    public ResponseEntity<ResponseDTO<Category>> addCategory(@RequestBody @Valid CategoryDTO categoryDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<Penawaran>> addPenawaran(@RequestBody @Valid PenawaranDTO penawaranDTO, Errors errors){
 
-    ResponseDTO<Category> responseDTO = new ResponseDTO<>();
+    ResponseDTO<Penawaran> responseDTO = new ResponseDTO<>();
 
     if(errors.hasErrors()){
       for (ObjectError error : errors.getAllErrors()) {
@@ -51,19 +43,22 @@ public class CategoryController {
       responseDTO.setPayload(null);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
-    Category category = new Category();
+    Penawaran penawaran = new Penawaran();
 
-    category.setCategoryName(categoryDTO.getCategoryName());    
+    penawaran.setNotifikasiId(penawaranDTO.getNotifikasiId());
+    penawaran.setUserId(penawaranDTO.getUserId());
+    penawaran.setProdukId(penawaranDTO.getProdukId());
+    penawaran.setHargaPenawaran(penawaranDTO.getHargaPenawaran());
     
     responseDTO.setStatus(true);
-    responseDTO.setPayload(categoryService.addCategory(category));
-    responseDTO.getMessage().add("Succes add Category");
+    responseDTO.setPayload(penawaranService.addPenawaran(penawaran));
+    responseDTO.getMessage().add("Succes add Penawaran");
     return ResponseEntity.ok(responseDTO);
   }
-  //mengupdate Category
+  //mengupdate Penawaran
   @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Category>> updateCategory (@RequestBody @Valid Category category , Errors errors) {  
-    ResponseDTO<Category> responseDTO = new ResponseDTO<>();
+  public ResponseEntity<ResponseDTO<Penawaran>> updatePenawaran (@RequestBody @Valid Penawaran penawaran , Errors errors) {  
+    ResponseDTO<Penawaran> responseDTO = new ResponseDTO<>();
 
     //if error
     if(errors.hasErrors()){
@@ -79,34 +74,33 @@ public class CategoryController {
 
 
     responseDTO.setStatus(true);
-    categoryService.updateCategory(category);
-    responseDTO.setPayload(category);
-    responseDTO.getMessage().add("Succes update category");
+    penawaranService.updatePenawaran(penawaran);
+    responseDTO.setPayload(penawaran);
+    responseDTO.getMessage().add("Succes update Penawaran");
     return ResponseEntity.ok(responseDTO);
   }
 
-  //mendapatkan semua Category
+  //mendapatkan semua Penawaran
   @GetMapping
-  public List<Category> getAllCategory(){
-      return this.categoryService.getAllCategories();
+  public List<Penawaran> getAllPenawaran(){
+      return this.penawaranService.getAllPenawaran();
   }
 
-  //mendapatkan Category by id
+  //mendapatkan Penawaran by id
   @GetMapping("/{id}")
-  public Category getCategoryById(@PathVariable Long id){
-      return this.categoryService.getById(id);
+  public Penawaran getPenawaranById(@PathVariable Long id){
+      return this.penawaranService.getById(id);
   }
 
-  //delete Category
+  //delete Penawaran
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteCategoryById(@PathVariable Long id){
+  public ResponseEntity<String> deletePenawaranById(@PathVariable Long id){
     try {
-        categoryService.deleteCategoryById(id);
+        penawaranService.deletePenawaranById(id);
       return new ResponseEntity<String>(HttpStatus.OK);
     }catch(RuntimeException ex){
       System.out.println(ex.getMessage());
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
-
 }
