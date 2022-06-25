@@ -1,7 +1,7 @@
 package com.secondhand.secondhand.services;
+import java.util.List;
 
 import com.secondhand.secondhand.models.entities.Category;
-import java.util.List;
 
 public interface CategoryService {
     public Category addCategory(Category newCategory);
@@ -10,4 +10,5 @@ public interface CategoryService {
     Category getById(Long categoryId);
     List<Category> getAllCategories();
     
+
 }

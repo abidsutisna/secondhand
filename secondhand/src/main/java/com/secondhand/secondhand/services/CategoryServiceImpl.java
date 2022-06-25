@@ -10,7 +10,6 @@ import com.secondhand.secondhand.models.repos.CategoryRepository;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
-
     @Autowired
     private CategoryRepository categoryRepository;
 

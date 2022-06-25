@@ -1,4 +1,4 @@
-package com.secondhand.secondhand.controller;
+    package com.secondhand.secondhand.controller;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lowagie.text.Image;
 import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.WishlistDTO;
 import com.secondhand.secondhand.models.entities.Produk;
@@ -109,3 +108,4 @@ public class WishlistController {
        this.wishlistService.addProduk(produk, wishlistId);
   }
 }
+

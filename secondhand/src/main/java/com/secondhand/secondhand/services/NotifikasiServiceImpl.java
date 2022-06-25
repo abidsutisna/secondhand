@@ -18,7 +18,7 @@ public class NotifikasiServiceImpl implements NotifikasiSevice{
 
     @Override
     public void updateNotifikasiBid(NotifikasiBid notifikasiBid) {
-        this.notifikasiBidRepository.findById(notifikasiBid.getBidId()).get();
+        this.notifikasiBidRepository.findById(notifikasiBid.getNotifikasiId()).get();
         this.notifikasiBidRepository.save(notifikasiBid);
     }
 
