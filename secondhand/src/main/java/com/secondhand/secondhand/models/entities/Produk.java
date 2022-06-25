@@ -54,6 +54,9 @@ public class Produk implements Serializable{
     @JsonBackReference
     private List<Wishlist> wishlist;
 
+    @OneToMany(targetEntity = Penawaran.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "produkId", referencedColumnName = "produkId")
+    private List<Penawaran> penawaran;
     
     private long historyId;
 

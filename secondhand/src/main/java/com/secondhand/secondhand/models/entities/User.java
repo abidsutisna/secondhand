@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -66,6 +67,11 @@ public class User implements UserDetails, Serializable {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<NotifikasiBid> notifikasi;
 
+    
+    @OneToMany(targetEntity = Penawaran.class, cascade = CascadeType.ALL )
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private List<Penawaran> penawaran;
+
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<Produk> produk;
@@ -73,6 +79,7 @@ public class User implements UserDetails, Serializable {
     @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Wishlist wishlist;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

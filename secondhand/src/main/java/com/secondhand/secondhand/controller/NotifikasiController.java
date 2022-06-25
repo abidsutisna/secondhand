@@ -46,8 +46,6 @@ public class NotifikasiController {
     }
     NotifikasiBid notifikasiBid = new NotifikasiBid();
 
-    
-    notifikasiBid.setPenawaranId(notifikasiDTO.getPenawaranId());
     notifikasiBid.setUserId(notifikasiDTO.getUserId());
     
     responseDTO.setStatus(true);

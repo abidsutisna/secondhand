@@ -1,25 +1,28 @@
 package com.secondhand.secondhand.models.entities;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-public class Penawaran {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Penawaran implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long penawaranId;
 
-    @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "penawaranId", referencedColumnName = "penawaranId")
     private Long notifikasiId;
 
     private Long userId;

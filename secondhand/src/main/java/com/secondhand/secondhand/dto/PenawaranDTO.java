@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PenawaranDTO {
+    
     private Long notifikasiId;
 
     private Long userId;
