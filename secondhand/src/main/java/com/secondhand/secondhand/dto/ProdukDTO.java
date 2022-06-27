@@ -2,9 +2,6 @@ package com.secondhand.secondhand.dto;
 
 import java.util.List;
 
-import javax.persistence.Column;
-
-import com.secondhand.secondhand.models.entities.Category;
 import com.secondhand.secondhand.models.entities.Image;
 
 import lombok.Getter;

@@ -8,9 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.secondhand.secondhand.models.entities.Produk;
 import com.secondhand.secondhand.models.entities.User;
-import com.secondhand.secondhand.models.repos.ProdukRepository;
 import com.secondhand.secondhand.models.repos.UserRepository;
 import com.secondhand.secondhand.utils.PasswordEncoder;
 
