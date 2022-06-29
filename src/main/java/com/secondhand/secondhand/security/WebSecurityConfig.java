@@ -28,11 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure (HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
-            .antMatchers("/user/register").permitAll()
-            .and()
-                .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/home",true)
+            .antMatchers("/user/register", "/user/login" , "/swagger-ui/").permitAll()
+            .anyRequest().fullyAuthenticated()
             .and().httpBasic();
     }
 
