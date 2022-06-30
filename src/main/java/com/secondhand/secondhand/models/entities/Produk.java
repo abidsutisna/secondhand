@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.JoinTable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -48,7 +51,7 @@ public class Produk implements Serializable{
     
     @OneToMany(targetEntity = Image.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "produkId", referencedColumnName = "produkId")
-    private List<Image> image;
+    private List<MultipartFile> image;
 
     @ManyToMany(mappedBy = "produk")
     @JsonBackReference

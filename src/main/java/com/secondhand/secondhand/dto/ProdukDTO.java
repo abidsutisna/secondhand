@@ -2,7 +2,7 @@ package com.secondhand.secondhand.dto;
 
 import java.util.List;
 
-import com.secondhand.secondhand.models.entities.Image;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ public class ProdukDTO {
 
     private String deskripsi;
 
-    private List<Image> image;
+    private List<MultipartFile> image;
 
     private long historyId;
 
