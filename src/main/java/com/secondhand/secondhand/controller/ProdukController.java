@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,7 +48,7 @@ public class ProdukController {
     @PostMapping ( 
       consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})  
-    public ResponseEntity<ResponseDTO<Produk>> addProduk(@RequestBody @Valid ProdukDTO produkDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<Produk>> addProduk(@ModelAttribute ProdukDTO produkDTO, Errors errors){
 
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
 
