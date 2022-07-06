@@ -148,4 +148,9 @@ public class ProdukController {
   public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
       return this.produkService.findByProdukName(searchDTO.getSearchKey());
   }
+
+  @GetMapping("/category/{id}")
+  public List<Produk> getProdukByCategory(@PathVariable Long id){
+      return this.produkService.getProdukByCategory(id);
+  }
 }

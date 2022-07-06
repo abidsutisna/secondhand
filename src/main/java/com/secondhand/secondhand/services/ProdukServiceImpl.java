@@ -44,4 +44,9 @@ public class ProdukServiceImpl implements ProdukService {
     public List<Produk> findByProdukName(String name) {
         return produkRepository.findProdukByName("%"+name+"%");
     } 
+
+    @Override
+    public List<Produk> getProdukByCategory(Long categoryId) {
+        return produkRepository.getProdukByCategory(categoryId);
+    }   
 }

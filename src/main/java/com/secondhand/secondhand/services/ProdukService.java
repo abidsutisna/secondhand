@@ -13,4 +13,5 @@ public interface ProdukService {
     Produk getById(Long produkId);
     List<Produk> getAllProduk();
     public List<Produk> findByProdukName (String name);
+    public List<Produk> getProdukByCategory(Long categoryId);
 }
