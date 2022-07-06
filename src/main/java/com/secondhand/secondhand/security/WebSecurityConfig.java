@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.secondhand.secondhand.services.UserService;
 
@@ -27,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure (HttpSecurity http) throws Exception{
+        http.cors().configurationSource((request) -> new CorsConfiguration().applyPermitDefaultValues() );
+        
         http.csrf().disable().authorizeRequests()
             .antMatchers("/user/register", "/user/login" , "/swagger-ui.html").permitAll()
             .anyRequest().fullyAuthenticated()
