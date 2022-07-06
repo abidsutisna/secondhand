@@ -66,6 +66,7 @@ public class ProdukController {
 
     produk.setProdukname(produkDTO.getProdukName());
     produk.setHargaProduk(produkDTO.getHargaProduk());
+    produk.setCategoryId(produkDTO.getCategoryId());
     produk.setDeskripsi(produkDTO.getDeskripsi());
     produk.setUserId(produkDTO.getUserId());
     produk.setHistoryId(produkDTO.getHistoryId());
@@ -75,6 +76,13 @@ public class ProdukController {
     
     for(int i=0; i<produkDTO.getImage().size(); i++){
 
+      if(i >= 4){
+        responseDTO.setStatus(false);
+        responseDTO.getMessage().add("postingan tidak boleh lebih dari 4");
+        responseDTO.setPayload(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+      }
+      
       Map<?,?> uploadImage = (Map<?,?>)cloudinaryStorageService.upload(produkDTO.getImage().get(i)).getData();
   
       Image image = new Image();
@@ -140,10 +148,4 @@ public class ProdukController {
   public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
       return this.produkService.findByProdukName(searchDTO.getSearchKey());
   }
-
-  @PostMapping("/{id}")
-  public void addCategory(@RequestBody Category category, @PathVariable("id") Long produkId){
-       this.produkService.addCategory(category, produkId);
-  }
-    
 }

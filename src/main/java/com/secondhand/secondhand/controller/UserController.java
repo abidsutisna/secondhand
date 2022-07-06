@@ -103,10 +103,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public String logoutDo(HttpServletRequest request,HttpServletResponse response)
-    {
-    
-  
+    public String logoutDo(HttpServletRequest request,HttpServletResponse response){
         return "redirect:/login";
     }
 
@@ -176,7 +173,6 @@ public class UserController {
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
-
 }
 
 

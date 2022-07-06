@@ -12,8 +12,10 @@ import lombok.Setter;
 public class ProdukDTO {
     private String produkName;
 
-    private Integer hargaProduk;
+    private Long hargaProduk;
 
+    private Long categoryId;
+    
     private String deskripsi;
 
     private List<MultipartFile> image;

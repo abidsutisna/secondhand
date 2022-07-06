@@ -43,18 +43,5 @@ public class ProdukServiceImpl implements ProdukService {
     @Override
     public List<Produk> findByProdukName(String name) {
         return produkRepository.findProdukByName("%"+name+"%");
-    }
-    
-
-    @Override
-    public void addCategory(Category category, Long produkId) {
-        Produk produk = getById(produkId);
-        if(produk == null ){   throw new RuntimeException("Product with ID: " + produkId + " Not found");
-         
-        }
-        produk.getCategories().add(category);
-        addProduk(produk);
-        
-    }
-    
+    } 
 }

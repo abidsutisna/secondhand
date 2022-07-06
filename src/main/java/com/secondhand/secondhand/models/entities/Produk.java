@@ -38,14 +38,9 @@ public class Produk implements Serializable{
 
     private String produkname;
 
-    private Integer hargaProduk;
+    private Long hargaProduk;
 
-    @ManyToMany
-    @JoinTable(
-        name="produk_category",
-        joinColumns = @JoinColumn(name="produkId"),
-        inverseJoinColumns = @JoinColumn(name = "categoryId"))
-    private List<Category> categories;
+    private Long categoryId;
 
     private String deskripsi;
     
