@@ -10,11 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 
 import com.secondhand.secondhand.services.UserService;
+import com.secondhand.secondhand.utils.AuthEntryPointJwt;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +28,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
+
+
+
     @Override
     protected void configure (HttpSecurity http) throws Exception{
-        http.cors().configurationSource((request) -> new CorsConfiguration().applyPermitDefaultValues() );
+
+        //basic authnya dimatiin
         
-        http.csrf().disable().authorizeRequests()
-            .antMatchers("/user/register", "/user/login" , "/swagger-ui.html").permitAll()
-            .anyRequest().fullyAuthenticated()
-            .and().httpBasic();
+        http.cors().configurationSource((request) -> new CorsConfiguration().applyPermitDefaultValues() );
+
+        http.cors().and().csrf().disable()
+        .authenticationProvider(daoAuthenticationProvider())
+        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .authorizeRequests().antMatchers("/**").permitAll()
+        .anyRequest().authenticated()
+        .and().httpBasic();
+
+        // http.csrf().disable().authorizeRequests()
+        //     .antMatchers("/user/register", "/user/login" , "/swagger-ui/").permitAll()
+        //     .anyRequest().fullyAuthenticated()
+        //     .and().httpBasic();
     }
 
     @Override
