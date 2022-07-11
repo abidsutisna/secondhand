@@ -40,18 +40,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.cors().configurationSource((request) -> new CorsConfiguration().applyPermitDefaultValues() );
 
-        http.cors().and().csrf().disable()
-        .authenticationProvider(daoAuthenticationProvider())
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests().antMatchers("/**").permitAll()
-        .anyRequest().authenticated()
-        .and().httpBasic();
+        // http.cors().and().csrf().disable()
+        // .authenticationProvider(daoAuthenticationProvider())
+        // .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        // .authorizeRequests().antMatchers("/**").permitAll()
+        // .anyRequest().authenticated()
+        // .and().httpBasic();
 
-        // http.csrf().disable().authorizeRequests()
-        //     .antMatchers("/user/register", "/user/login" , "/swagger-ui/").permitAll()
-        //     .anyRequest().fullyAuthenticated()
-        //     .and().httpBasic();
+        http.csrf().disable().authorizeRequests()
+            .antMatchers("/user/register", "/user/login" , "/swagger-ui/").permitAll()
+            .anyRequest().fullyAuthenticated()
+            .and().httpBasic();
     }
 
     @Override
