@@ -1,5 +1,7 @@
 package com.secondhand.secondhand.dto;
 
+import com.secondhand.secondhand.utils.StatusTawaranEnum;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +16,6 @@ public class PenawaranDTO {
     private Long produkId;
 
     private Long hargaPenawaran;
+
+    private StatusTawaranEnum statusTawaran;
 }

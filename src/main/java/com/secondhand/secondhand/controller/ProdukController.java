@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,15 @@ import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.SearchDTO;
 import com.secondhand.secondhand.models.entities.Category;
 import com.secondhand.secondhand.models.entities.Image;
+import com.secondhand.secondhand.models.entities.Penawaran;
 import com.secondhand.secondhand.models.entities.Produk;
+import com.secondhand.secondhand.services.CategoryService;
 import com.secondhand.secondhand.services.CloudinaryStorageService;
 import com.secondhand.secondhand.services.ImageService;
+import com.secondhand.secondhand.services.PenawaranService;
 import com.secondhand.secondhand.services.ProdukService;
+import com.secondhand.secondhand.services.UserService;
+import com.secondhand.secondhand.utils.StatusProdukEnum;
 
 @RestController
 @RequestMapping("/produk")
@@ -42,12 +48,18 @@ public class ProdukController {
     private ImageService imageService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private CloudinaryStorageService cloudinaryStorageService;
 
+    @Autowired
+    private PenawaranService penawaranService;
+
     //menambahkan Produk.
-    @PostMapping ( 
-      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-      produces = {MediaType.APPLICATION_JSON_VALUE})  
+    @PostMapping( 
+                  consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+                  produces = {MediaType.APPLICATION_JSON_VALUE})  
     public ResponseEntity<ResponseDTO<Produk>> addProduk(@ModelAttribute ProdukDTO produkDTO, Errors errors){
 
     ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
@@ -67,13 +79,14 @@ public class ProdukController {
     produk.setProdukname(produkDTO.getProdukName());
     produk.setHargaProduk(produkDTO.getHargaProduk());
     produk.setCategoryId(produkDTO.getCategoryId());
+    produk.setCategoryName(categoryService.getById(produkDTO.getCategoryId()).getCategoryName());
     produk.setDeskripsi(produkDTO.getDeskripsi());
     produk.setUserId(produkDTO.getUserId());
-    produk.setHistoryId(produkDTO.getHistoryId());
+    produk.setHistoryId(produkDTO.getUserId());
     
     responseDTO.setStatus(true);
     responseDTO.setPayload(produkService.addProduk(produk));
-    
+
     for(int i=0; i<produkDTO.getImage().size(); i++){
 
       if(i >= 4){
@@ -84,7 +97,7 @@ public class ProdukController {
       }
       
       Map<?,?> uploadImage = (Map<?,?>)cloudinaryStorageService.upload(produkDTO.getImage().get(i)).getData();
-  
+      
       Image image = new Image();
       image.setProdukId(produk.getProdukId());
       image.setImagelink(uploadImage.get("url").toString());
@@ -94,7 +107,6 @@ public class ProdukController {
     responseDTO.getMessage().add("Succes add produk");
     return ResponseEntity.ok(responseDTO);
   }
-
   //mengupdate Produk
   @PutMapping("/update")
   public ResponseEntity<ResponseDTO<Produk>> updateProduk (@RequestBody @Valid Produk produk , Errors errors) {  
@@ -117,6 +129,52 @@ public class ProdukController {
     produkService.updateProduk(produk);
     responseDTO.setPayload(produk);
     responseDTO.getMessage().add("Succes update produk");
+    return ResponseEntity.ok(responseDTO);
+  }
+
+  @PostMapping("/statusProduk")
+  public ResponseEntity<ResponseDTO<Produk>> updateStatusProduk (@RequestBody @Valid Produk produk , Errors errors) {  
+    ResponseDTO<Produk> responseDTO = new ResponseDTO<>();
+
+    //if error
+    //produk
+    if(errors.hasErrors()){
+      for (ObjectError error : errors.getAllErrors()) {
+          //add message ke response data
+          responseDTO.getMessage().add(error.getDefaultMessage());
+      }
+      responseDTO.setStatus(false);
+      //null karena terjadi error
+      responseDTO.setPayload(null);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+    }
+
+    responseDTO.setStatus(true);
+    // Produk produk = new Produk();
+
+    // produk.setProdukId(produkDTO.getProdukId()); //isi nya postman
+
+    produk.setProdukname(produkService.getById(produk.getProdukId()).getProdukname());
+    produk.setHargaProduk(produkService.getById(produk.getProdukId()).getHargaProduk());
+    produk.setCategoryId(produkService.getById(produk.getProdukId()).getCategoryId());
+    produk.setDeskripsi(produkService.getById(produk.getProdukId()).getDeskripsi());
+    produk.setImage(produkService.getById(produk.getProdukId()).getImage());
+    produk.setHistoryId(produkService.getById(produk.getProdukId()).getHistoryId());
+    produk.setUserId(produkService.getById(produk.getProdukId()).getUserId());
+    produk.setWishlist(produkService.getById(produk.getProdukId()).getWishlist());
+    produk.setPenawaran(produkService.getById(produk.getProdukId()).getPenawaran());
+
+    //true false
+    if(produk.getStatusTerjual().equals("true")){
+      produk.setStatusProduk(StatusProdukEnum.TERJUAL);
+      responseDTO.getMessage().add("Status Produk menjadi TERJUAL");
+    } else {
+      produk.setStatusProduk(StatusProdukEnum.PUBLISH);
+      responseDTO.getMessage().add("Transaksi dibatalkan");
+    }
+
+    produkService.updateProduk(produk);
+    responseDTO.setPayload(produk);
     return ResponseEntity.ok(responseDTO);
   }
 
@@ -147,7 +205,7 @@ public class ProdukController {
   @PostMapping("/search")
   public List<Produk> getProdukByName(@RequestBody SearchDTO searchDTO ){
       return this.produkService.findByProdukName(searchDTO.getSearchKey());
-  }
+  } 
 
   @GetMapping("/category/{id}")
   public List<Produk> getProdukByCategory(@PathVariable Long id){

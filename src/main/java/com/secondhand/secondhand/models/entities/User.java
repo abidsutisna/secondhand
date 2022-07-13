@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,12 +16,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +35,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -64,6 +64,7 @@ public class User implements UserDetails, Serializable {
 
     @OneToOne(targetEntity = History.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JsonBackReference
     private History history;
 
     @OneToMany(targetEntity = NotifikasiBid.class, cascade = CascadeType.ALL )
@@ -77,7 +78,7 @@ public class User implements UserDetails, Serializable {
 
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private List<Produk> produk;
+    private List<Produk> produk; 
 
     @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
@@ -86,10 +87,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority(userRole1.name());
-        SimpleGrantedAuthority authority2 = new SimpleGrantedAuthority(userRole2.name());
-
-
+        SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority("BUYER, SELLER");
         return Collections.singletonList(authority1) ;
     }
 

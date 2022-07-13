@@ -24,7 +24,6 @@ import lombok.Setter;
 public class History implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyId; 
     
     private Long userId;

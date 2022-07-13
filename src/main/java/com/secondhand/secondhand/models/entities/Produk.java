@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.JoinTable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.secondhand.secondhand.utils.StatusProdukEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +45,11 @@ public class Produk implements Serializable{
     private Long hargaProduk;
 
     private Long categoryId;
+    
+    private String categoryName;
 
+    private String statusTerjual;
+    
     private String deskripsi;
     
     @OneToMany(targetEntity = Image.class, cascade = CascadeType.ALL )
@@ -59,5 +67,9 @@ public class Produk implements Serializable{
     private long historyId;
 
     private long userId;
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private StatusProdukEnum statusProduk = StatusProdukEnum.PUBLISH;
 
 }

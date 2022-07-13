@@ -18,14 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.secondhand.secondhand.dto.PenawaranDTO;
 import com.secondhand.secondhand.dto.ResponseDTO;
+import com.secondhand.secondhand.models.entities.NotifikasiBid;
 import com.secondhand.secondhand.models.entities.Penawaran;
+import com.secondhand.secondhand.models.entities.Produk;
+import com.secondhand.secondhand.services.NotifikasiSevice;
 import com.secondhand.secondhand.services.PenawaranService;
+import com.secondhand.secondhand.services.ProdukService;
+import com.secondhand.secondhand.utils.StatusProdukEnum;
+import com.secondhand.secondhand.utils.StatusTawaranEnum;
 
 @RestController 
 @RequestMapping("/penawaran")
 public class PenawaranController {
     @Autowired
     private PenawaranService penawaranService;
+
+    @Autowired
+    private ProdukService produkService;
+
+    @Autowired
+    private NotifikasiSevice notifikasiSevice;
 
     //menambahkan Penawaran
     @PostMapping    
@@ -45,10 +57,23 @@ public class PenawaranController {
     }
     Penawaran penawaran = new Penawaran();
 
-    penawaran.setNotifikasiId(penawaranDTO.getNotifikasiId());
     penawaran.setUserId(penawaranDTO.getUserId());
     penawaran.setProdukId(penawaranDTO.getProdukId());
+
+    if(produkService.getById(penawaranDTO.getProdukId()).getStatusProduk().equals(StatusProdukEnum.TERJUAL)){
+      responseDTO.setStatus(true);
+      responseDTO.setPayload(null);
+      responseDTO.getMessage().add("Produk sudah habis terjual");
+      return ResponseEntity.ok(responseDTO);
+    }
+
     penawaran.setHargaPenawaran(penawaranDTO.getHargaPenawaran());
+
+    NotifikasiBid notifikasibBid = new NotifikasiBid();
+    notifikasibBid.setUserId(produkService.getById(penawaranDTO.getProdukId()).getUserId());
+    notifikasiSevice.addNotifikasiBid(notifikasibBid);
+
+    penawaran.setNotifikasiId(notifikasibBid.getNotifikasiId());
     
     responseDTO.setStatus(true);
     responseDTO.setPayload(penawaranService.addPenawaran(penawaran));
@@ -103,4 +128,42 @@ public class PenawaranController {
       return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @PostMapping("/statusPenawaran")
+  public ResponseEntity<ResponseDTO<Penawaran>> updateStatusPenawaran (@RequestBody @Valid Penawaran penawaran , Errors errors) {  
+    ResponseDTO<Penawaran> responseDTO = new ResponseDTO<>();
+
+    //if error
+    //produk
+    if(errors.hasErrors()){
+      for (ObjectError error : errors.getAllErrors()) {
+          //add message ke response data
+          responseDTO.getMessage().add(error.getDefaultMessage());
+      }
+      responseDTO.setStatus(false);
+      //null karena terjadi error
+      responseDTO.setPayload(null);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+    }
+
+    responseDTO.setStatus(true);
+
+    penawaran.setNotifikasiId(penawaranService.getById(penawaran.getPenawaranId()).getNotifikasiId());
+    penawaran.setUserId(penawaranService.getById(penawaran.getPenawaranId()).getUserId());
+    penawaran.setProdukId(penawaranService.getById(penawaran.getPenawaranId()).getProdukId());
+    penawaran.setHargaPenawaran(penawaranService.getById(penawaran.getPenawaranId()).getHargaPenawaran());
+
+    if(penawaran.getStatusTerima().equals("deal")){
+      penawaran.setStatusTawaran(StatusTawaranEnum.DEAL);
+      responseDTO.getMessage().add("anda menerima tawaran");
+    }else if(penawaran.getStatusTerima().equals("ditolak")) {
+      penawaran.setStatusTawaran(StatusTawaranEnum.DITOLAK);
+      responseDTO.getMessage().add("anda menolak tawaran");
+    }
+
+    penawaranService.updatePenawaran(penawaran);
+    responseDTO.setPayload(penawaran);
+    return ResponseEntity.ok(responseDTO);
+  }
+
 }

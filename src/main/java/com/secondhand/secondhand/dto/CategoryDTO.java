@@ -21,9 +21,4 @@ public class CategoryDTO {
     private Long categoryId;
 
     private String categoryName;
-
-    @ManyToMany(mappedBy = "categories")
-    @JsonBackReference
-    private List<Produk> produk ;
-
 }

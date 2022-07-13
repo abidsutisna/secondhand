@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +32,13 @@ import com.secondhand.secondhand.dto.ResponseDTO;
 import com.secondhand.secondhand.dto.UserLoginDTO;
 import com.secondhand.secondhand.dto.UserRegsiterDTO;
 import com.secondhand.secondhand.dto.UserUpdateDTO;
+import com.secondhand.secondhand.models.entities.History;
+import com.secondhand.secondhand.models.entities.NotifikasiBid;
 import com.secondhand.secondhand.models.entities.User;
 import com.secondhand.secondhand.models.entities.UserRole;
 import com.secondhand.secondhand.services.CloudinaryStorageService;
+import com.secondhand.secondhand.services.HistoryService;
+import com.secondhand.secondhand.services.NotifikasiSevice;
 import com.secondhand.secondhand.services.UserService;
 import com.secondhand.secondhand.utils.JwtUtil;
 
@@ -40,17 +46,20 @@ import com.secondhand.secondhand.utils.JwtUtil;
 @RequestMapping("/user")
 public class UserController {
     
-  @Autowired
-  private UserService userService;
+    @Autowired
+    private UserService userService;
 
-  @Autowired
-  private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-  @Autowired
-  private JwtUtil jwtUtil;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-  @Autowired
-  private CloudinaryStorageService cloudinaryStorageService;
+    @Autowired
+    private CloudinaryStorageService cloudinaryStorageService;
+
+    @Autowired
+    private HistoryService historyService;
 
     @GetMapping("/home")
     public String welcome() {
@@ -76,6 +85,7 @@ public class UserController {
         }
 
         User user = new User();
+        History history = new History();
 
         user.setName(userRegisterDTO.getName());
         user.setEmail(userRegisterDTO.getEmail());
@@ -84,20 +94,23 @@ public class UserController {
         user.setUserRole2(UserRole.SELLER);
 
         responseDTO.setStatus(true);
-
         responseDTO.setPayload(userService.registerUsers(user)) ;
+
+        history.setHistoryId(user.getUserId());
+        history.setUserId(user.getUserId());
+        historyService.addHistory(history);
+
         responseDTO.getMessage().add("Succes register");
         return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping("/login")
     public String generateToken(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword())
-            );
+      try {
+        authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword()));
         } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
+          throw new Exception("inavalid username/password");
         }
         return jwtUtil.generateToken(userLoginDTO.getEmail());
     }
@@ -116,7 +129,7 @@ public class UserController {
     ResponseDTO<User> responseDTO = new ResponseDTO<>();
 
     //if error
-    if(errors.hasErrors()){
+    if(errors.hasErrors()){ 
       for (ObjectError error : errors.getAllErrors()) {
           //add message ke response data
           responseDTO.getMessage().add(error.getDefaultMessage());
@@ -150,8 +163,7 @@ public class UserController {
     
     responseDTO.getMessage().add("Succes update user");
     return ResponseEntity.ok(responseDTO);
-    };
-
+    }
     //mendapatkan semua data user
   @GetMapping
   public List<User> getAllUser(){
@@ -174,6 +186,7 @@ public class UserController {
     }
   }
 }
+
 
 
 

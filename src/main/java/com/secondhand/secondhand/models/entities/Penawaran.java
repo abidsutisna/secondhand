@@ -2,11 +2,18 @@ package com.secondhand.secondhand.models.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.secondhand.secondhand.utils.StatusTawaranEnum;
+
+import ch.qos.logback.core.status.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +36,12 @@ public class Penawaran implements Serializable{
 
     private Long produkId;
 
-    private Long hargaPenawaran;
+    private Long hargaPenawaran; 
 
+    @JsonBackReference
+    private String statusTerima;
+    
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private StatusTawaranEnum statusTawaran = StatusTawaranEnum.NEGOSIASI;
 }
