@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.secondhand.secondhand.models.entities.User;
+import com.secondhand.secondhand.models.entities.Users;
 public interface UserService {
     
-    public User addUser(User newUser);
-    void updateUser(User user);
+    public Users addUser(Users newUser);
+    void updateUser(Users user);
     void deleteUserById(Long id);
-    User getById(Long userId);
-    List<User> getAllUser();
+    Users getById(Long userId);
+    List<Users> getAllUser();
     public UserDetails loadUserByUsername(String userName);
-    public User registerUsers(User user);
-    User login (String email, String password);
+    public Users registerUsers(Users user);
+    Users login (String email, String password);
 }
 
 

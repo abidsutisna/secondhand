@@ -34,7 +34,7 @@ import com.secondhand.secondhand.dto.UserRegsiterDTO;
 import com.secondhand.secondhand.dto.UserUpdateDTO;
 import com.secondhand.secondhand.models.entities.History;
 import com.secondhand.secondhand.models.entities.NotifikasiBid;
-import com.secondhand.secondhand.models.entities.User;
+import com.secondhand.secondhand.models.entities.Users;
 import com.secondhand.secondhand.models.entities.UserRole;
 import com.secondhand.secondhand.services.CloudinaryStorageService;
 import com.secondhand.secondhand.services.HistoryService;
@@ -67,10 +67,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO<User>> registerUser(@RequestBody @Valid UserRegsiterDTO userRegisterDTO, Errors errors){
+    public ResponseEntity<ResponseDTO<Users>> registerUser(@RequestBody @Valid UserRegsiterDTO userRegisterDTO, Errors errors){
 
 
-        ResponseDTO<User> responseDTO = new ResponseDTO<>();
+        ResponseDTO<Users> responseDTO = new ResponseDTO<>();
 
         //if error
         if(errors.hasErrors()){
@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
         }
 
-        User user = new User();
+        Users user = new Users();
         History history = new History();
 
         user.setName(userRegisterDTO.getName());
@@ -123,9 +123,9 @@ public class UserController {
     @PostMapping( value =  "/update" ,
                   consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
                   produces = {MediaType.APPLICATION_JSON_VALUE}) 
-    public ResponseEntity<ResponseDTO<User>> updateUser(@ModelAttribute UserUpdateDTO userUpdateDTO, Errors errors) {  
+    public ResponseEntity<ResponseDTO<Users>> updateUser(@ModelAttribute UserUpdateDTO userUpdateDTO, Errors errors) {  
 
-    ResponseDTO<User> responseDTO = new ResponseDTO<>();
+    ResponseDTO<Users> responseDTO = new ResponseDTO<>();
 
     //if error
     if(errors.hasErrors()){ 
@@ -139,7 +139,7 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
     
-    User user = new User();
+    Users user = new Users();
 
     user.setName(userService.getById(userUpdateDTO.getUserId()).getUsername());
     user.setUserRole1(UserRole.BUYER);
@@ -165,12 +165,12 @@ public class UserController {
     }
     //mendapatkan semua data user
   @GetMapping
-  public List<User> getAllUser(){
+  public List<Users> getAllUser(){
     return userService.getAllUser();
   }
 
   @GetMapping("/{id}")
-  public User getUserById(@PathVariable Long id){
+  public Users getUserById(@PathVariable Long id){
       return userService.getById(id);
   }
 

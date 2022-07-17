@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.secondhand.secondhand.models.entities.User;
+import com.secondhand.secondhand.models.entities.Users;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-    Optional<User> findByEmail (String email);
+public interface UserRepository extends JpaRepository<Users, Long>{
+    Optional<Users> findByEmail (String email);
 
-    public User findByEmailAndPassword (String email, String password);
+    public Users findByEmailAndPassword (String email, String password);
 }
 
 

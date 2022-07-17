@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.secondhand.secondhand.models.entities.User;
+import com.secondhand.secondhand.models.entities.Users;
 import com.secondhand.secondhand.models.repos.UserRepository;
 import com.secondhand.secondhand.utils.PasswordEncoder;
 
@@ -22,12 +22,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User addUser(User newUser) {
+    public Users addUser(Users newUser) {
         return this.userRepository.save(newUser);
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(Users user) {
         this.userRepository.findById(user.getUserId()).get();
         this.userRepository.save(user);
     }
@@ -38,12 +38,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public User getById(Long userId) {
+    public Users getById(Long userId) {
         return this.userRepository.findById(userId).get();
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<Users> getAllUser() {
 
         return this.userRepository.findAll() ;
     }
@@ -51,14 +51,14 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String userName) {
         return userRepository.findByEmail(userName)
-        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email : " + userName));
+        .orElseThrow(() -> new UsernameNotFoundException("Users Not Found with email : " + userName));
     }
 
     @Override
-    public User registerUsers(User user) {
+    public Users registerUsers(Users user) {
         boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if(userExists){
-            throw new RuntimeException("User already exists with email: " + user.getEmail());
+            throw new RuntimeException("Users already exists with email: " + user.getEmail());
         }
 
         String encodePassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public User login (String email, String password) {
-        User user = userRepository.findByEmailAndPassword(email, password);
+    public Users login (String email, String password) {
+        Users user = userRepository.findByEmailAndPassword(email, password);
         return user;
     }
  
