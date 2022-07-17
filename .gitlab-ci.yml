@@ -3,6 +3,11 @@ image: maven:3.8.5-jdk-16
 stages:
   - deploy
 
+security:
+    oauth2:
+        resource:
+            filter-order: 3
+            
 Staging:
   image: ruby:latest
   stage: deploy

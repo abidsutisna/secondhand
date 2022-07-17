@@ -1,6 +1,5 @@
 package com.secondhand.secondhand.utils;
 
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

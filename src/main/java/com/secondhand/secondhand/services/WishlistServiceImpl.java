@@ -10,6 +10,7 @@ import com.secondhand.secondhand.models.repos.WishlistRepository;
 
 @Service
 public class WishlistServiceImpl implements WishlistService{
+    
     @Autowired
     private WishlistRepository wishlistRepository;
 

@@ -8,6 +8,7 @@ import com.secondhand.secondhand.models.repos.NotifikasiBidRepository;
 
 @Service
 public class NotifikasiServiceImpl implements NotifikasiSevice{
+    
     @Autowired
     private NotifikasiBidRepository notifikasiBidRepository;
 

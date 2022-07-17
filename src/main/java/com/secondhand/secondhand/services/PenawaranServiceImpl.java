@@ -8,6 +8,7 @@ import com.secondhand.secondhand.models.repos.PenawaranRepository;
 
 @Service
 public class PenawaranServiceImpl implements PenawaranService{
+    
     @Autowired
     private PenawaranRepository penawaranRepository;
 
