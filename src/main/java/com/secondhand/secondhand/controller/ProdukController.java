@@ -211,4 +211,9 @@ public class ProdukController {
   public List<Produk> getProdukByCategory(@PathVariable Long id){
       return this.produkService.getProdukByCategory(id);
   }
+
+  @GetMapping("/history/{id}")
+  public List<Produk> getHistoryProduk(@PathVariable Long id){
+      return this.produkService.getHistoryProduk(id);
+  }
 }

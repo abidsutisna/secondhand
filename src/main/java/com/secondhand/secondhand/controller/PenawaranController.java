@@ -57,7 +57,7 @@ public class PenawaranController {
     }
     Penawaran penawaran = new Penawaran();
 
-    penawaran.setUserId(penawaranDTO.getUserId());
+    penawaran.setUserId(penawaranDTO.getUserIdPenawar());
     penawaran.setProdukId(penawaranDTO.getProdukId());
 
     if(produkService.getById(penawaranDTO.getProdukId()).getStatusProduk().equals(StatusProdukEnum.TERJUAL)){
@@ -153,12 +153,16 @@ public class PenawaranController {
     penawaran.setProdukId(penawaranService.getById(penawaran.getPenawaranId()).getProdukId());
     penawaran.setHargaPenawaran(penawaranService.getById(penawaran.getPenawaranId()).getHargaPenawaran());
 
-    if(penawaran.getStatusTerima().equals("deal")){
+    if(penawaran.getStatusTerima().equals("true")){
       penawaran.setStatusTawaran(StatusTawaranEnum.DEAL);
       responseDTO.getMessage().add("anda menerima tawaran");
-    }else if(penawaran.getStatusTerima().equals("ditolak")) {
+    }else if(penawaran.getStatusTerima().equals("false")) {
       penawaran.setStatusTawaran(StatusTawaranEnum.DITOLAK);
       responseDTO.getMessage().add("anda menolak tawaran");
+    } else {
+      responseDTO.setStatus(false);
+      responseDTO.setPayload(null);
+      responseDTO.getMessage().add("true or false only");
     }
 
     penawaranService.updatePenawaran(penawaran);

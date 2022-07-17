@@ -11,6 +11,7 @@ import com.secondhand.secondhand.models.repos.ProdukRepository;
 
 @Service
 public class ProdukServiceImpl implements ProdukService {
+
     @Autowired
     private ProdukRepository produkRepository;
 
@@ -43,10 +44,15 @@ public class ProdukServiceImpl implements ProdukService {
     @Override
     public List<Produk> findByProdukName(String name) {
         return produkRepository.findProdukByName("%"+name+"%");
-    } 
+    }
 
     @Override
     public List<Produk> getProdukByCategory(Long categoryId) {
         return produkRepository.getProdukByCategory(categoryId);
+    }
+
+    @Override
+    public List<Produk> getHistoryProduk(Long userId) {
+        return produkRepository.getHistoryProduk(userId);
     }   
 }

@@ -71,7 +71,6 @@ public class User implements UserDetails, Serializable {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<NotifikasiBid> notifikasi;
 
-    
     @OneToMany(targetEntity = Penawaran.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<Penawaran> penawaran;
@@ -79,7 +78,8 @@ public class User implements UserDetails, Serializable {
     @OneToMany(targetEntity = Produk.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private List<Produk> produk; 
-
+    
+    @JsonBackReference
     @OneToOne(targetEntity = Wishlist.class, cascade = CascadeType.ALL )
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Wishlist wishlist;

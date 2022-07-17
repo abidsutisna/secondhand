@@ -11,7 +11,7 @@ public class PenawaranDTO {
     
     private Long notifikasiId;
 
-    private Long userId;
+    private Long userIdPenawar;
 
     private Long produkId;
 

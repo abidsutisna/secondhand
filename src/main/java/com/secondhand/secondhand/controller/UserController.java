@@ -99,7 +99,6 @@ public class UserController {
         history.setHistoryId(user.getUserId());
         history.setUserId(user.getUserId());
         historyService.addHistory(history);
-
         responseDTO.getMessage().add("Succes register");
         return ResponseEntity.ok(responseDTO);
     }
@@ -186,7 +185,6 @@ public class UserController {
     }
   }
 }
-
 
 
 

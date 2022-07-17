@@ -20,4 +20,7 @@ public interface ProdukRepository extends JpaRepository<Produk, Long>{
 
     @Query("SELECT p FROM Produk p WHERE p.categoryId = :categoryId")
     public List<Produk> getProdukByCategory(@PathVariable Long categoryId);
+
+    @Query("SELECT p FROM Produk p WHERE p.userId = :userId AND p.statusProduk =1")
+    public List<Produk> getHistoryProduk(@PathVariable Long userId);
 }
