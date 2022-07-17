@@ -80,54 +80,7 @@ public class PenawaranController {
     responseDTO.getMessage().add("Succes add Penawaran");
     return ResponseEntity.ok(responseDTO);
   }
-  //mengupdate Penawaran
-  @PutMapping("/update")
-  public ResponseEntity<ResponseDTO<Penawaran>> updatePenawaran (@RequestBody @Valid Penawaran penawaran , Errors errors) {  
-    ResponseDTO<Penawaran> responseDTO = new ResponseDTO<>();
-
-    //if error
-    if(errors.hasErrors()){
-      for (ObjectError error : errors.getAllErrors()) {
-          //add message ke response data
-          responseDTO.getMessage().add(error.getDefaultMessage());
-      }
-      responseDTO.setStatus(false);
-      //null karena terjadi error
-      responseDTO.setPayload(null);
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
-    }
-
-
-    responseDTO.setStatus(true);
-    penawaranService.updatePenawaran(penawaran);
-    responseDTO.setPayload(penawaran);
-    responseDTO.getMessage().add("Succes update Penawaran");
-    return ResponseEntity.ok(responseDTO);
-  }
-
-  //mendapatkan semua Penawaran
-  @GetMapping
-  public List<Penawaran> getAllPenawaran(){
-      return this.penawaranService.getAllPenawaran();
-  }
-
-  //mendapatkan Penawaran by id
-  @GetMapping("/{id}")
-  public Penawaran getPenawaranById(@PathVariable Long id){
-      return this.penawaranService.getById(id);
-  }
-
-  //delete Penawaran
-  @DeleteMapping("/{id}")
-  public ResponseEntity<String> deletePenawaranById(@PathVariable Long id){
-    try {
-        penawaranService.deletePenawaranById(id);
-      return new ResponseEntity<String>(HttpStatus.OK);
-    }catch(RuntimeException ex){
-      System.out.println(ex.getMessage());
-      return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-    }
-  }
+ 
 
   @PostMapping("/statusPenawaran")
   public ResponseEntity<ResponseDTO<Penawaran>> updateStatusPenawaran (@RequestBody @Valid Penawaran penawaran , Errors errors) {  
