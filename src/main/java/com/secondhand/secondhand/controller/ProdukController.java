@@ -161,7 +161,6 @@ public class ProdukController {
     produk.setImage(produkService.getById(produk.getProdukId()).getImage());
     produk.setHistoryId(produkService.getById(produk.getProdukId()).getHistoryId());
     produk.setUserId(produkService.getById(produk.getProdukId()).getUserId());
-    produk.setWishlist(produkService.getById(produk.getProdukId()).getWishlist());
     produk.setPenawaran(produkService.getById(produk.getProdukId()).getPenawaran());
 
     //true false
