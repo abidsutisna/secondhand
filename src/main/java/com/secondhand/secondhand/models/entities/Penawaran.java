@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.secondhand.secondhand.utils.StatusTawaranEnum;
 
-import ch.qos.logback.core.status.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
