@@ -10,12 +10,16 @@ import lombok.Setter;
 @Setter
 public class UserLoginDTO {
 
+    private Long id;
+
     @NotEmpty(message = "email is required")
     @Email(message = "Email is not valid")
     private String email;
 
     @NotEmpty(message = "Password is required")
     private String password;
+
+    private String token;
 
 }
 

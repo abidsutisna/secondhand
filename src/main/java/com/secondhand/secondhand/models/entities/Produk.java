@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.secondhand.secondhand.utils.StatusProdukEnum;
+import com.secondhand.secondhand.utils.StatusWishlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,10 @@ public class Produk implements Serializable{
     private String categoryName;
 
     private String statusTerjual;
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private StatusWishlist statusWishlist =  StatusWishlist.NO;
     
     private String deskripsi;
     

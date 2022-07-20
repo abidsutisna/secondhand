@@ -42,6 +42,8 @@ import com.secondhand.secondhand.services.NotifikasiSevice;
 import com.secondhand.secondhand.services.UserService;
 import com.secondhand.secondhand.utils.JwtUtil;
 
+import net.bytebuddy.asm.Advice.Return;
+
 @RestController 
 @RequestMapping("/user")
 public class UserController {
@@ -104,14 +106,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String generateToken(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+    public ResponseEntity<ResponseDTO<UserLoginDTO>> generateToken(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+      ResponseDTO<UserLoginDTO> responseDTO = new ResponseDTO<>();
       try {
         authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword()));
+          userLoginDTO.setId(userService.findByEmail(userLoginDTO.getEmail()).getUserId());
+          userLoginDTO.setToken(jwtUtil.generateToken(userLoginDTO.getEmail()));
         } catch (Exception ex) {
           throw new Exception("inavalid username/password");
         }
-        return jwtUtil.generateToken(userLoginDTO.getEmail());
+
+        responseDTO.setStatus(true);
+        responseDTO.setPayload(userLoginDTO);
+        responseDTO.getMessage().add("success");
+
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping("/logout")

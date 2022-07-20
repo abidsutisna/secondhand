@@ -1,6 +1,7 @@
 package com.secondhand.secondhand.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,7 @@ public interface UserService {
     public UserDetails loadUserByUsername(String userName);
     public Users registerUsers(Users user);
     Users login (String email, String password);
+    Users findByEmail (String email);
 }
 
 

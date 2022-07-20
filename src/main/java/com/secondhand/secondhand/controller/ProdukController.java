@@ -215,4 +215,9 @@ public class ProdukController {
   public List<Produk> getHistoryProduk(@PathVariable Long id){
       return this.produkService.getHistoryProduk(id);
   }
+
+  @GetMapping("/wishlist/{id}")
+  public List<Produk> getWishlist(@PathVariable Long id){
+      return this.produkService.getwishList(id);
+  }
 }

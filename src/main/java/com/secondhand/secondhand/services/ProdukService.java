@@ -15,4 +15,5 @@ public interface ProdukService {
     public List<Produk> findByProdukName (String name);
     public List<Produk> getProdukByCategory(Long categoryId);
     public List<Produk> getHistoryProduk(Long userId);
+    public List<Produk> getwishList(Long userId);
 }

@@ -1,6 +1,8 @@
 package com.secondhand.secondhand.models.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.exolab.castor.types.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.secondhand.secondhand.utils.StatusTawaranEnum;
@@ -34,6 +38,16 @@ public class Penawaran implements Serializable{
     private Long userId;
 
     private Long produkId;
+
+    private String messageNotifikasi;
+
+    private String time;
+
+    private String imageUrl;
+
+    private String produkName;
+
+    private Long harga;
 
     private Long hargaPenawaran; 
 

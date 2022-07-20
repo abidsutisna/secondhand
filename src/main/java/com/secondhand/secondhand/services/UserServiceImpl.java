@@ -1,6 +1,7 @@
 package com.secondhand.secondhand.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,5 +73,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         Users user = userRepository.findByEmailAndPassword(email, password);
         return user;
     }
- 
+
+    @Override
+    public Users findByEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
 }

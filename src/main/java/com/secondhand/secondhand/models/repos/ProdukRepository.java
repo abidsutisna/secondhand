@@ -23,4 +23,7 @@ public interface ProdukRepository extends JpaRepository<Produk, Long>{
 
     @Query("SELECT p FROM Produk p WHERE p.userId = :userId AND p.statusProduk =1")
     public List<Produk> getHistoryProduk(@PathVariable Long userId);
+
+    @Query("SELECT p FROM Produk p WHERE p.userId = :userId AND p.statusWishlist =1")
+    public List<Produk> getwishList(@PathVariable Long userId);
 }

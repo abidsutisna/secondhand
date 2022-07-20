@@ -54,5 +54,10 @@ public class ProdukServiceImpl implements ProdukService {
     @Override
     public List<Produk> getHistoryProduk(Long userId) {
         return produkRepository.getHistoryProduk(userId);
+    }
+
+    @Override
+    public List<Produk> getwishList(Long userId) {
+        return produkRepository.getwishList(userId);
     }   
 }

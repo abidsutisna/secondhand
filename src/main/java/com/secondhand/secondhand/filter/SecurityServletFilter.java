@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 public class SecurityServletFilter extends HttpFilter{
     
