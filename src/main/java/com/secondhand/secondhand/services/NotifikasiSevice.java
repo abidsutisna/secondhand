@@ -9,4 +9,5 @@ public interface NotifikasiSevice {
     void deleteNotifikasiBidById(Long id);
     NotifikasiBid getById(Long bidId);
     List<NotifikasiBid> getAllNotifikasiBid();
+    List<NotifikasiBid> getNotifikasiByUserId(Long userId);
 }

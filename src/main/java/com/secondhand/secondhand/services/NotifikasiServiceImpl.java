@@ -37,4 +37,9 @@ public class NotifikasiServiceImpl implements NotifikasiSevice{
     public List<NotifikasiBid> getAllNotifikasiBid() {
         return this.notifikasiBidRepository.findAll();
     }
+
+    @Override
+    public List<NotifikasiBid> getNotifikasiByUserId(Long userId) {
+        return this.notifikasiBidRepository.getNotifikasiByUserId(userId);
+    }
 }

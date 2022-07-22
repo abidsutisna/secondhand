@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +41,7 @@ import com.secondhand.secondhand.utils.StatusProdukEnum;
 
 @RestController
 @RequestMapping("/produk")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ProdukController {
     @Autowired
     private ProdukService produkService;
